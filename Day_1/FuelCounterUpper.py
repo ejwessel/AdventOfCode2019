@@ -33,5 +33,5 @@ if __name__ == "__main__":
     result = sol.calculate_fuel_required(100756)
     assert result == 33583
 
-    result = sol.fuel_requirement("Day_1/input.txt")
+    result = sol.fuel_requirement("input.txt")
     print(result)
