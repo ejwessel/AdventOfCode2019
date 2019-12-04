@@ -29,7 +29,7 @@ class ManhattanDistance:
         :return last_coordinate: the last coordinate in this direction
         '''
         current = start
-        for i in range(1, dist + 1):
+        for i in range(dist):
             # coordinate builds on previous coordinate
             if direction is self.DIRECTION.UP.value:
                 coordinate = (current[0], current[1] + 1)
