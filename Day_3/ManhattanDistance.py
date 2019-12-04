@@ -48,7 +48,7 @@ class ManhattanDistance:
                 # if the same type ignore
                 if wire_type in self.seen_coords[coordinate]:
                     continue
-                # it's not the sae type, determine if distance can be updated
+                # it's not the same type, determine if distance can be updated
                 else:
                     self.seen_coords[coordinate].add(wire_type)
                     # compute distance and update
@@ -76,7 +76,6 @@ class ManhattanDistance:
             direction = item[0]
             amount = int(item[1:])
             last_coordinate = self.compute(last_coordinate, direction, amount, wire_type)
-            wire_type += 1
 
     def compute_distance_file(self, file_input):
         # wire num to distances
@@ -135,15 +134,10 @@ if __name__ == "__main__":
     assert sol.distance == 135
 
     sol = ManhattanDistance()
-    sol.compute_distance_file("input.txt")
-    assert sol.distance == 399
-
-    sol = ManhattanDistance()
     sol.compute_distance([['R75', 'D30', 'R83', 'U83', 'L12', 'D49', 'R71', 'U7', 'L72'],
                           ['U62', 'R66', 'U55', 'R34', 'D71', 'R55', 'D58', 'R83']])
-    for key, value in sol.seen_coords.items():
-        if len(value) > 1:
-            print(key)
-    print(sol.distance)
-    # assert sol.distance == 159
+    assert sol.distance == 159
 
+    sol = ManhattanDistance()
+    sol.compute_distance_file("input.txt")
+    assert sol.distance == 399
