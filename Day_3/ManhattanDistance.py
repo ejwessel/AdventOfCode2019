@@ -44,20 +44,16 @@ class ManhattanDistance:
             if coordinate not in self.seen_coords:
                 self.seen_coords[coordinate] = set()
                 self.seen_coords[coordinate].add(wire_type)
+            # handle if we've seen the coordinate again
             elif coordinate in self.seen_coords:
-                # if the same type ignore
-                if wire_type in self.seen_coords[coordinate]:
-                    continue
-                # it's not the same type, determine if distance can be updated
-                else:
-                    self.seen_coords[coordinate].add(wire_type)
-                    # compute distance and update
+                # add the wire type
+                self.seen_coords[coordinate].add(wire_type)
+                # if there is more than 1 wire type at a coordinate there is an overlap
+                if len(self.seen_coords[coordinate]) > 1:
                     if self.distance is None:
                         self.distance = self.compute_manhattan_distance(coordinate)
                     else:
-                        candidate_distance = self.compute_manhattan_distance(coordinate)
-                        if candidate_distance < self.distance:
-                            self.distance = candidate_distance
+                        self.distance = min(self.compute_manhattan_distance(coordinate), self.distance)
 
             # update current to end of last coordinate
             current = coordinate
