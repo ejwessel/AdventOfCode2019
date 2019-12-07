@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e57c5a47-5a76-4794-bd11-d51071ec91f4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Day_2/IntcodeProgram.py" beforeDir="false" afterPath="$PROJECT_DIR$/Day_2/IntcodeProgram.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Day_3/ManhattanDistance.py" beforeDir="false" afterPath="$PROJECT_DIR$/Day_3/ManhattanDistance.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,7 +34,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.IntcodeProgram">
+  <component name="RunManager" selected="Python.ManhattanDistance">
     <configuration name="FuelCounterUpper" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AdventOfCode2019" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -100,9 +100,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.ManhattanDistance" />
         <item itemvalue="Python.IntcodeProgram" />
         <item itemvalue="Python.FuelCounterUpper" />
-        <item itemvalue="Python.ManhattanDistance" />
       </list>
     </recent_temporary>
   </component>
@@ -135,11 +135,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Day_3/ManhattanDistance.py</url>
-          <line>69</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Day_2/IntcodeProgram.py</url>
           <line>59</line>
