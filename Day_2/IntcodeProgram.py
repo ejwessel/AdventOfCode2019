@@ -41,6 +41,27 @@ class IntcodeProgram:
                 break
         return input
 
+    def compute_noun_verb(self, file_input):
+        '''
+        To do this, before running the program,
+        replace position 1 with the value 12 and
+        replace position 2 with the value 2.
+        What value is left at position 0 after the program halts?
+        '''
+
+        with open(file_input) as data:
+            for line in data:
+                input_values_initial = [int(str_num) for str_num in line.split(',')]
+                for noun in range(99):
+                    for verb in range(99):
+                        input_values = input_values_initial.copy()
+                        input_values[1] = noun
+                        input_values[2] = verb
+                        result = self.run(input_values)
+                        if result[0] == 19690720:
+                            return 100 * noun + verb
+        return 0
+
 
 if __name__ == "__main__":
     sol = IntcodeProgram()
@@ -70,4 +91,6 @@ if __name__ == "__main__":
     assert result[0] == 4714701
     print(result[0])
 
+    result = sol.compute_noun_verb("input.txt")
+    print(result)
 
