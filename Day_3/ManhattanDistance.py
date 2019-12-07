@@ -20,7 +20,7 @@ class ManhattanDistance:
         # absolute value since distance is never negative1
         return abs(coordinate[0]) + abs(coordinate[1])
 
-    def compute(self, start, direction, dist, wire_type):
+    def compute(self, start, direction, dist, wire_type, total_dist):
         '''
         Marks all coordinate from start position in a direction and adds to set
         Will simultaneously check if wires cross and update closest coordinate
@@ -40,20 +40,20 @@ class ManhattanDistance:
             elif direction is self.DIRECTION.RIGHT.value:
                 coordinate = (current[0] + 1, current[1])
 
+            total_dist += 1
+
             # handle if this coordinate is the first time being seen
             if coordinate not in self.seen_coords:
-                self.seen_coords[coordinate] = set()
-                self.seen_coords[coordinate].add(wire_type)
-            # handle if we've seen the coordinate again
-            elif coordinate in self.seen_coords:
-                # add the wire type
-                self.seen_coords[coordinate].add(wire_type)
-                # if there is more than 1 wire type at a coordinate there is an overlap
-                if len(self.seen_coords[coordinate]) > 1:
-                    if self.distance is None:
-                        self.distance = self.compute_manhattan_distance(coordinate)
-                    else:
-                        self.distance = min(self.compute_manhattan_distance(coordinate), self.distance)
+                self.seen_coords[coordinate] = {}
+            self.seen_coords[coordinate][wire_type] = total_dist
+
+            # add the wire type
+            # if there is more than 1 wire type at a coordinate there is an overlap
+            if len(self.seen_coords[coordinate]) > 1:
+                if self.distance is None:
+                    self.distance = self.compute_manhattan_distance(coordinate)
+                else:
+                    self.distance = min(self.compute_manhattan_distance(coordinate), self.distance)
 
             # update current to end of last coordinate
             current = coordinate
@@ -68,10 +68,12 @@ class ManhattanDistance:
 
         # go through all direction distances and populate seen coordinates
         last_coordinate = start
+        total_distance = 0
         for item in dir_dist:
             direction = item[0]
             amount = int(item[1:])
-            last_coordinate = self.compute(last_coordinate, direction, amount, wire_type)
+            last_coordinate = self.compute(last_coordinate, direction, amount, wire_type, total_distance)
+            total_distance += amount
 
     def compute_distance_file(self, file_input):
         # wire num to distances
@@ -87,54 +89,6 @@ class ManhattanDistance:
         wire_type = 0
         for wire in wires:
             self.add_wire(self.central_coordinates, wire, wire_type)
-            wire_type += 1
-
-    # PART 2 =====================
-
-    def compute_least_steps(self, start, direction, dist, wire_type, total_dist):
-        current = start
-        for i in range(dist):
-            # coordinate builds on previous coordinate
-            if direction is self.DIRECTION.UP.value:
-                coordinate = (current[0], current[1] + 1)
-            elif direction is self.DIRECTION.DOWN.value:
-                coordinate = (current[0], current[1] - 1)
-            elif direction is self.DIRECTION.LEFT.value:
-                coordinate = (current[0] - 1, current[1])
-            elif direction is self.DIRECTION.RIGHT.value:
-                coordinate = (current[0] + 1, current[1])
-
-            total_dist += 1
-
-            # handle if this coordinate is the first time being seen
-            if coordinate not in self.seen_coords:
-                self.seen_coords[coordinate] = {}
-            # add the wire regardless
-            self.seen_coords[coordinate][wire_type] = total_dist
-            current = coordinate
-        return current
-
-    def add_wire_with_step(self, start, dir_dist, wire_type):
-        '''
-        adds a wire to the control panel
-        :param dir_dist: direction distance
-        :return:
-        '''
-
-        # go through all direction distances and populate seen coordinates
-        last_coordinate = start
-        total_distance = 0
-        for item in dir_dist:
-            direction = item[0]
-            amount = int(item[1:])
-            last_coordinate = self.compute_least_steps(last_coordinate, direction, amount, wire_type, total_distance)
-            # append amount to total distance after
-            total_distance += amount
-
-    def compute_least_step_distance(self, wires):
-        wire_type = 0
-        for wire in wires:
-            self.add_wire_with_step(self.central_coordinates, wire, wire_type)
             wire_type += 1
 
     def get_least_steps(self):
@@ -153,43 +107,33 @@ class ManhattanDistance:
                         min_distance = temp_distance
         return min_distance
 
-    def compute_least_distance_file(self, file_input):
-        # wire num to distances
-        wires = []
-        with open(file_input) as data:
-            for line in data:
-                distances = line.split(',')
-                wires.append(distances)
-
-        self.compute_least_step_distance(wires)
-
 
 if __name__ == "__main__":
     sol = ManhattanDistance()
-    result = sol.compute((0, 0), 'U', 50, 1)
+    result = sol.compute((0, 0), 'U', 50, 1, 0)
     assert result == (0, 50)
     assert len(sol.seen_coords) == 50
 
     sol = ManhattanDistance()
-    result = sol.compute((0, 0), 'D', 50, 1)
+    result = sol.compute((0, 0), 'D', 50, 1, 0)
     assert result == (0, -50)
     assert len(sol.seen_coords) == 50
 
     sol = ManhattanDistance()
-    result = sol.compute((0, 0), 'L', 50, 1)
+    result = sol.compute((0, 0), 'L', 50, 1, 0)
     assert result == (-50, 0)
     assert len(sol.seen_coords) == 50
 
     sol = ManhattanDistance()
-    result = sol.compute((0, 0), 'R', 50, 1)
+    result = sol.compute((0, 0), 'R', 50, 1, 0)
     assert result == (50, 0)
     assert len(sol.seen_coords) == 50
 
     sol = ManhattanDistance()
-    result = sol.compute((0, 0), 'U', 50, 1)
+    result = sol.compute((0, 0), 'U', 50, 1, 0)
     assert result == (0, 50)
     assert len(sol.seen_coords) == 50
-    result = sol.compute((0, 0), 'U', 50, 2)
+    result = sol.compute((0, 0), 'U', 50, 2, 0)
     assert result == (0, 50)
     assert len(sol.seen_coords) == 50
 
@@ -210,24 +154,7 @@ if __name__ == "__main__":
 
     sol = ManhattanDistance()
     sol.compute_distance_file("input.txt")
+    steps = sol.get_least_steps()
     assert sol.distance == 399
-
-    # PART 2 =======================================
-
-    sol = ManhattanDistance()
-    sol.compute_least_step_distance([['R75', 'D30', 'R83', 'U83', 'L12', 'D49', 'R71', 'U7', 'L72'],
-                          ['U62', 'R66', 'U55', 'R34', 'D71', 'R55', 'D58', 'R83']])
-    result = sol.get_least_steps()
-    assert result == 610
-
-    sol = ManhattanDistance()
-    sol.compute_least_step_distance([['R98', 'U47', 'R26', 'D63', 'R33', 'U87', 'L62', 'D20', 'R33', 'U53', 'R51'],
-                          ['U98', 'R91', 'D20', 'R16', 'D67', 'R40', 'U7', 'R15', 'U6', 'R7']])
-    result = sol.get_least_steps()
-    assert result == 410
-
-    sol = ManhattanDistance()
-    sol.compute_least_distance_file("input.txt")
-    result = sol.get_least_steps()
-    print(result)
+    assert steps == 15678
 
