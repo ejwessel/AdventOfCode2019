@@ -25,60 +25,67 @@ class IntcodeProgram:
                 result = self.run(input_values)
                 return result
 
+    def add(self, input_codes, instruction_set, instruction_pointer):
+        [mode_1, mode_2, mode_3] = instruction_set[1:]
+        param_1 = input_codes[instruction_pointer + 1]
+        param_2 = input_codes[instruction_pointer + 2]
+        param_3 = input_codes[instruction_pointer + 3]
+
+        value_1 = param_1 if mode_1 == self.IMMEDIATE else input_codes[param_1]
+        value_2 = param_2 if mode_2 == self.IMMEDIATE else input_codes[param_2]
+        summed_val = value_1 + value_2
+
+        save_idx = param_3 if mode_3 == self.POSITION else input_codes[param_3]
+        input_codes[save_idx] = summed_val
+
+    def mul(self, input_codes, instruction_set, instruction_pointer):
+        [mode_1, mode_2, mode_3] = instruction_set[1:]
+        param_1 = input_codes[instruction_pointer + 1]
+        param_2 = input_codes[instruction_pointer + 2]
+        param_3 = input_codes[instruction_pointer + 3]
+
+        value_1 = param_1 if mode_1 == self.IMMEDIATE else input_codes[param_1]
+        value_2 = param_2 if mode_2 == self.IMMEDIATE else input_codes[param_2]
+        product_val = value_1 * value_2
+
+        save_idx = param_3 if mode_3 == self.POSITION else input_codes[param_3]
+        input_codes[save_idx] = product_val
+
+    def save(self, input_codes, instruction_set, instruction_pointer):
+        value = input("ID of the system to test: ")
+        [mode_1] = instruction_set[1:]
+        param_1 = input_codes[instruction_pointer + 1]
+        save_idx = param_1 if mode_1 == self.POSITION else input_codes[param_1]
+
+        input_codes[save_idx] = int(value)
+
+    def output(self, input_codes, instruction_set, instruction_pointer):
+        [mode_1] = instruction_set[1:]
+        param_1 = input_codes[instruction_pointer + 1]
+        print(param_1) if mode_1 == self.IMMEDIATE else print(input_codes[param_1])
+
     def run(self, input_codes):
         # every 4 digits is an opcode
-        program_counter = 0
+        instruction_pointer = 0
         while True:
-            instruction = input_codes[program_counter]
+            instruction = input_codes[instruction_pointer]
             instruction_set = self.get_instruction_set(instruction)
             opcode = instruction_set[0]
 
             if opcode == self.HALT:
                 break
             elif opcode == self.ADD:
-                # add
-                [mode_1, mode_2, mode_3] = instruction_set[1:]
-                param_1 = input_codes[program_counter + 1]
-                param_2 = input_codes[program_counter + 2]
-                param_3 = input_codes[program_counter + 3]
-
-                value_1 = param_1 if mode_1 == self.IMMEDIATE else input_codes[param_1]
-                value_2 = param_2 if mode_2 == self.IMMEDIATE else input_codes[param_2]
-                summed_val = value_1 + value_2
-
-                save_idx = param_3 if mode_3 == self.POSITION else input_codes[param_3]
-                input_codes[save_idx] = summed_val
-                program_counter += 4
+                self.add(input_codes, instruction_set, instruction_pointer)
+                instruction_pointer += 4
             elif opcode == self.MUL:
-                # multiply
-                [mode_1, mode_2, mode_3] = instruction_set[1:]
-                param_1 = input_codes[program_counter + 1]
-                param_2 = input_codes[program_counter + 2]
-                param_3 = input_codes[program_counter + 3]
-
-                value_1 = param_1 if mode_1 == self.IMMEDIATE else input_codes[param_1]
-                value_2 = param_2 if mode_2 == self.IMMEDIATE else input_codes[param_2]
-                product_val = value_1 * value_2
-
-                save_idx = param_3 if mode_3 == self.POSITION else input_codes[param_3]
-                input_codes[save_idx] = product_val
-                program_counter += 4
+                self.mul(input_codes, instruction_set, instruction_pointer)
+                instruction_pointer += 4
             elif opcode == self.SAVE:
-                # Save
-                value = input("ID of the system to test: ")
-
-                [mode_1] = instruction_set[1:]
-                param_1 = input_codes[program_counter + 1]
-                save_idx = param_1 if mode_1 == self.POSITION else input_codes[param_1]
-
-                input_codes[save_idx] = int(value)
-                program_counter += 2
+                self.save(input_codes, instruction_set, instruction_pointer)
+                instruction_pointer += 2
             elif opcode == self.READ:
-                # output
-                [mode_1] = instruction_set[1:]
-                param_1 = input_codes[program_counter + 1]
-                print(param_1) if mode_1 == self.IMMEDIATE else print(input_codes[param_1])
-                program_counter += 2
+                self.output(input_codes, instruction_set, instruction_pointer)
+                instruction_pointer += 2
             else:
                 break
         return input_codes
