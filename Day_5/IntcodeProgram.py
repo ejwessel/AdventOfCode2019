@@ -1,14 +1,18 @@
+from enum import Enum
+
+
 class IntcodeProgram:
 
-    def __init__(self):
-        self.HALT = 99
-        self.ADD = 1
-        self.MUL = 2
-        self.SAVE = 3
-        self.READ = 4
-        self.POSITION = 0
-        self.IMMEDIATE = 1
+    class Opcodes(Enum):
+        HALT = 99
+        ADD = 1
+        MUL = 2
+        SAVE = 3
+        READ = 4
 
+    class Modes(Enum):
+        POSITION = 0
+        IMMEDIATE = 1
 
     def run_intcode(self, file_input):
         '''
@@ -31,11 +35,11 @@ class IntcodeProgram:
         param_2 = input_codes[instruction_pointer + 2]
         param_3 = input_codes[instruction_pointer + 3]
 
-        value_1 = param_1 if mode_1 == self.IMMEDIATE else input_codes[param_1]
-        value_2 = param_2 if mode_2 == self.IMMEDIATE else input_codes[param_2]
+        value_1 = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
+        value_2 = param_2 if mode_2 == self.Modes.IMMEDIATE.value else input_codes[param_2]
         summed_val = value_1 + value_2
 
-        save_idx = param_3 if mode_3 == self.POSITION else input_codes[param_3]
+        save_idx = param_3 if mode_3 == self.Modes.POSITION.value else input_codes[param_3]
         input_codes[save_idx] = summed_val
 
     def mul(self, input_codes, instruction_set, instruction_pointer):
@@ -44,25 +48,25 @@ class IntcodeProgram:
         param_2 = input_codes[instruction_pointer + 2]
         param_3 = input_codes[instruction_pointer + 3]
 
-        value_1 = param_1 if mode_1 == self.IMMEDIATE else input_codes[param_1]
-        value_2 = param_2 if mode_2 == self.IMMEDIATE else input_codes[param_2]
+        value_1 = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
+        value_2 = param_2 if mode_2 == self.Modes.IMMEDIATE.value else input_codes[param_2]
         product_val = value_1 * value_2
 
-        save_idx = param_3 if mode_3 == self.POSITION else input_codes[param_3]
+        save_idx = param_3 if mode_3 == self.Modes.POSITION.value else input_codes[param_3]
         input_codes[save_idx] = product_val
 
     def save(self, input_codes, instruction_set, instruction_pointer):
         value = input("ID of the system to test: ")
         [mode_1] = instruction_set[1:]
         param_1 = input_codes[instruction_pointer + 1]
-        save_idx = param_1 if mode_1 == self.POSITION else input_codes[param_1]
+        save_idx = param_1 if mode_1 == self.Modes.POSITION.value else input_codes[param_1]
 
         input_codes[save_idx] = int(value)
 
     def output(self, input_codes, instruction_set, instruction_pointer):
         [mode_1] = instruction_set[1:]
         param_1 = input_codes[instruction_pointer + 1]
-        print(param_1) if mode_1 == self.IMMEDIATE else print(input_codes[param_1])
+        print(param_1) if mode_1 == self.Modes.IMMEDIATE.value else print(input_codes[param_1])
 
     def run(self, input_codes):
         # every 4 digits is an opcode
@@ -72,18 +76,18 @@ class IntcodeProgram:
             instruction_set = self.get_instruction_set(instruction)
             opcode = instruction_set[0]
 
-            if opcode == self.HALT:
+            if opcode == self.Opcodes.HALT.value:
                 break
-            elif opcode == self.ADD:
+            elif opcode == self.Opcodes.ADD.value:
                 self.add(input_codes, instruction_set, instruction_pointer)
                 instruction_pointer += 4
-            elif opcode == self.MUL:
+            elif opcode == self.Opcodes.MUL.value:
                 self.mul(input_codes, instruction_set, instruction_pointer)
                 instruction_pointer += 4
-            elif opcode == self.SAVE:
+            elif opcode == self.Opcodes.SAVE.value:
                 self.save(input_codes, instruction_set, instruction_pointer)
                 instruction_pointer += 2
-            elif opcode == self.READ:
+            elif opcode == self.Opcodes.READ.value:
                 self.output(input_codes, instruction_set, instruction_pointer)
                 instruction_pointer += 2
             else:
@@ -97,13 +101,13 @@ class IntcodeProgram:
         instruction_set.append(opcode)
         instruction = int(instruction / 100)
 
-        if opcode == self.ADD or opcode == self.MUL:
+        if opcode == self.Opcodes.ADD.value or opcode == self.Opcodes.MUL.value:
             # look for three params
             for i in range(3):
                 mode = instruction % 10
                 instruction = int(instruction / 10)
                 instruction_set.append(mode)
-        elif opcode == self.SAVE or opcode == self.READ:
+        elif opcode == self.Opcodes.SAVE.value or opcode == self.Opcodes.READ.value:
             # look for 2 params
             for i in range(1):
                 mode = instruction % 10
