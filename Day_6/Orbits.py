@@ -54,6 +54,7 @@ if __name__ == "__main__":
     sol = Graph()
     sol.make_graph_file("input.txt")
     sol.compute_transitive_closure('COM', [])
+    print(sol.graph)
     total_closures = 0
     for available_nodes in sol.closure.values():
         total_closures += len(available_nodes)
