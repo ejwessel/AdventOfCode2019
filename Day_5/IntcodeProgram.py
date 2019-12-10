@@ -9,6 +9,10 @@ class IntcodeProgram:
         MUL = 2
         SAVE = 3
         READ = 4
+        JUMP_T = 5
+        JUMP_F = 6
+        LESS_THAN = 7
+        EQUAL = 8
 
     class Modes(Enum):
         POSITION = 0
@@ -68,8 +72,63 @@ class IntcodeProgram:
         param_1 = input_codes[instruction_pointer + 1]
         print(param_1) if mode_1 == self.Modes.IMMEDIATE.value else print(input_codes[param_1])
 
+    def jump_t(self, input_codes, instruction_set, instruction_pointer):
+        [mode_1, mode_2] = instruction_set[1:]
+        param_1 = input_codes[instruction_pointer + 1]
+        param_2 = input_codes[instruction_pointer + 2]
+
+        value_1 = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
+        value_2 = param_2 if mode_2 == self.Modes.IMMEDIATE.value else input_codes[param_2]
+
+        # set the instruction pointer to the value from the second param
+        if value_1 != 0:
+            return value_2
+        return None
+
+    def jump_f(self, input_codes, instruction_set, instruction_pointer):
+        [mode_1, mode_2] = instruction_set[1:]
+        param_1 = input_codes[instruction_pointer + 1]
+        param_2 = input_codes[instruction_pointer + 2]
+
+        value_1 = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
+        value_2 = param_2 if mode_2 == self.Modes.IMMEDIATE.value else input_codes[param_2]
+
+        # set the instruction pointer to the value from the second param
+        if value_1 == 0:
+            return value_2
+        return None
+
+    def less_than(self, input_codes, instruction_set, instruction_pointer):
+        [mode_1, mode_2, mode_3] = instruction_set[1:]
+        param_1 = input_codes[instruction_pointer + 1]
+        param_2 = input_codes[instruction_pointer + 2]
+        param_3 = input_codes[instruction_pointer + 2]
+
+        value_1 = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
+        value_2 = param_2 if mode_2 == self.Modes.IMMEDIATE.value else input_codes[param_2]
+        value_3 = param_3 if mode_3 == self.Modes.IMMEDIATE.value else input_codes[param_3]
+
+        if value_1 < value_2:
+            input_codes[value_3] = 1
+        else:
+            input_codes[value_3] = 0
+
+    def equal(self, input_codes, instruction_set, instruction_pointer):
+        [mode_1, mode_2, mode_3] = instruction_set[1:]
+        param_1 = input_codes[instruction_pointer + 1]
+        param_2 = input_codes[instruction_pointer + 2]
+        param_3 = input_codes[instruction_pointer + 2]
+
+        value_1 = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
+        value_2 = param_2 if mode_2 == self.Modes.IMMEDIATE.value else input_codes[param_2]
+        value_3 = param_3 if mode_3 == self.Modes.IMMEDIATE.value else input_codes[param_3]
+
+        if value_1 == value_2:
+            input_codes[value_3] = 1
+        else:
+            input_codes[value_3] = 0
+
     def run(self, input_codes):
-        # every 4 digits is an opcode
         instruction_pointer = 0
         while True:
             instruction = input_codes[instruction_pointer]
@@ -90,6 +149,18 @@ class IntcodeProgram:
             elif opcode == self.Opcodes.READ.value:
                 self.output(input_codes, instruction_set, instruction_pointer)
                 instruction_pointer += 2
+            elif opcode == self.Opcodes.JUMP_T:
+                new_pointer = self.jump_t(input_codes, instruction_set, instruction_pointer)
+                instruction_pointer = new_pointer if instruction_pointer is not None else instruction_pointer
+            elif opcode == self.Opcodes.JUMP_F:
+                new_pointer = self.jump_f(input_codes, instruction_set, instruction_pointer)
+                instruction_pointer = new_pointer if instruction_pointer is not None else instruction_pointer
+            elif opcode == self.Opcodes.LESS_THAN:
+                self.less_than(input_codes, instruction_set, instruction_pointer)
+                instruction_pointer += 4
+            elif opcode == self.Opcodes.EQUAL:
+                self.equal(input_codes, instruction_set, instruction_pointer)
+                instruction_pointer += 4
             else:
                 break
         return input_codes
