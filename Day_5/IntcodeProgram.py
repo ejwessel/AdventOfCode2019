@@ -77,8 +77,7 @@ class IntcodeProgram:
                 # output
                 [mode_1] = instruction_set[1:]
                 param_1 = input_codes[i + 1]
-                read_idx = param_1 if mode_1 == self.POSITION else input_codes[param_1]
-                print(input_codes[read_idx])
+                print(param_1) if mode_1 == self.IMMEDIATE else print(input_codes[param_1])
                 i += 2
             else:
                 break
@@ -130,17 +129,17 @@ class IntcodeProgram:
 if __name__ == "__main__":
     sol = IntcodeProgram()
 
-    # input_list = [1002, 4, 3, 4, 33]
-    # result = sol.run(input_list)
-    # assert (result == [1002, 4, 3, 4, 99])
+    input_list = [1002, 4, 3, 4, 33]
+    result = sol.run(input_list)
+    assert (result == [1002, 4, 3, 4, 99])
 
-    # input_list = [1101, 100, -1, 4, 0]
-    # result = sol.run(input_list)
-    # assert (result == [1101, 100, -1, 4, 99])
+    input_list = [1101, 100, -1, 4, 0]
+    result = sol.run(input_list)
+    assert (result == [1101, 100, -1, 4, 99])
 
-    # input_list = [3, 0, 4, 0, 99]
-    # result = sol.run(input_list)
-    # assert (result == [50, 0, 4, 0, 99])
+    input_list = [3, 0, 4, 0, 99]
+    result = sol.run(input_list)
+    # assert (result == [50, 0, 4, 0, 99]) # when input is 50
 
     result = sol.run_intcode("input2.txt")
     # print(result)
