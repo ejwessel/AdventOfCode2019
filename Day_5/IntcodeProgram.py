@@ -162,19 +162,19 @@ if __name__ == "__main__":
     # input_list = [3, 0, 4, 0, 99]
     # result = sol.run(input_list)
 
-    input_list = [1002, 4, 3, 4, 33]
-    result = sol.run(input_list)
-    assert (result == [1002, 4, 3, 4, 99])
-    print(result)
+    # input_list = [1002, 4, 3, 4, 33]
+    # result = sol.run(input_list)
+    # assert (result == [1002, 4, 3, 4, 99])
+    # print(result)
+    #
+    # input_list = [1101, 100, -1, 4, 0]
+    # result = sol.run(input_list)
+    # assert (result == [1101, 100, -1, 4, 99])
+    # print(result)
+    #
+    # input_list = [3, 0, 4, 0, 99]
+    # result = sol.run(input_list)
+    # assert (result == [50, 0, 4, 0, 99])
 
-    input_list = [1101, 100, -1, 4, 0]
-    result = sol.run(input_list)
-    assert (result == [1101, 100, -1, 4, 99])
-    print(result)
-
-    input_list = [3, 0, 4, 0, 99]
-    result = sol.run(input_list)
-    assert (result == [50, 0, 4, 0, 99])
-
-    # result = sol.run_intcode("input2.txt")
+    result = sol.run_intcode("input2.txt")
     # print(result)
