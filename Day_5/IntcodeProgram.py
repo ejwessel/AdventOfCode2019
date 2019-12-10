@@ -22,8 +22,6 @@ class IntcodeProgram:
             for line in data:
                 # list comprehension to turn all strings in list to ints
                 input_values = [int(str_num) for str_num in line.split(',')]
-                input_values[1] = 12
-                input_values[2] = 2
                 result = self.run(input_values)
                 return result
 
