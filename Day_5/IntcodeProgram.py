@@ -183,10 +183,10 @@ class IntcodeProgram:
                 instruction_pointer += 2
             elif opcode == self.Opcodes.JUMP_T.value:
                 new_pointer = self.jump_t(input_codes, instruction_set, instruction_pointer)
-                instruction_pointer = new_pointer if instruction_pointer is not None else instruction_pointer
+                instruction_pointer = new_pointer if new_pointer is not None else instruction_pointer + 3
             elif opcode == self.Opcodes.JUMP_F.value:
                 new_pointer = self.jump_f(input_codes, instruction_set, instruction_pointer)
-                instruction_pointer = new_pointer if instruction_pointer is not None else instruction_pointer
+                instruction_pointer = new_pointer if new_pointer is not None else instruction_pointer + 3
             elif opcode == self.Opcodes.LESS_THAN.value:
                 self.less_than(input_codes, instruction_set, instruction_pointer)
                 instruction_pointer += 4
@@ -239,13 +239,31 @@ if __name__ == "__main__":
 
     # input_list = [3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8]
     # result = sol.run(input_list)
-    # assert (result == [3, 9, 8, 9, 10, 9, 4, 9, 99, 1, 8]) # when input is 8
+    # assert (result == [3, 9, 8, 9, 10, 9, 4, 9, 99, 1, 8]) # when input is 8, using position mode
     # result = sol.run(input_list)
-    # assert (result == [3, 9, 8, 9, 10, 9, 4, 9, 99, 0, 8]) # when input is anything else
+    # assert (result == [3, 9, 8, 9, 10, 9, 4, 9, 99, 0, 8]) # when input is anything else, using position mode
 
     # input_list = [3, 9, 7, 9, 10, 9, 4, 9, 99, -1, 8]
     # result = sol.run(input_list)
-    # assert result == [3, 9, 7, 9, 10, 9, 4, 9, 99, 0, 8] # when output is > 8
+    # assert result == [3, 9, 7, 9, 10, 9, 4, 9, 99, 0, 8] # when input is > 8, using position mode
     # assert (result == )
     # result = sol.run(input_list)
-    # assert result == [3, 9, 7, 9, 10, 9, 4, 9, 99, 1, 8] # when output is < 8
+    # assert result == [3, 9, 7, 9, 10, 9, 4, 9, 99, 1, 8] # when input is < 8, using position mode
+
+    # input_list = [3, 3, 1108, -1, 8, 3, 4, 3, 99]
+    # result = sol.run(input_list)
+    # assert result == [3, 3, 1108, 1, 8, 3, 4, 3, 99] # when input is 8, using immediate mode
+    # result = sol.run(input_list)
+    # assert result == [3, 3, 1108, 0, 8, 3, 4, 3, 99] # when input is anything else, using immediate mode
+
+    # input_list = [3, 3, 1107, -1, 8, 3, 4, 3, 99]
+    # result = sol.run(input_list)
+    # assert result == [3, 3, 1107, 1, 8, 3, 4, 3, 99] # when input is < 8, using immediate mode
+    # result = sol.run(input_list)
+    # assert result == [3, 3, 1107, 0, 8, 3, 4, 3, 99] # when input is > 8, using immediate mode
+
+    input_list = [3, 12, 6, 12, 15, 1, 13, 14, 13, 4, 13, 99, -1, 0, 1, 9]
+    result = sol.run(input_list)
+    print(result)
+    result = sol.run(input_list)
+    print(result)
