@@ -93,13 +93,13 @@ class IntcodeProgram:
         instruction_set.append(opcode)
         instruction = int(instruction / 100)
 
-        if opcode == 1 or opcode == 2:
+        if opcode == self.ADD or opcode == self.MUL:
             # look for three params
             for i in range(3):
                 mode = instruction % 10
                 instruction = int(instruction / 10)
                 instruction_set.append(mode)
-        elif opcode == 3 or opcode == 4:
+        elif opcode == self.SAVE or opcode == self.READ:
             # look for 2 params
             for i in range(1):
                 mode = instruction % 10
