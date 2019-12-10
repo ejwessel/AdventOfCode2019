@@ -2,7 +2,6 @@ from enum import Enum
 
 
 class IntcodeProgram:
-
     class Opcodes(Enum):
         HALT = 99
         ADD = 1
@@ -32,6 +31,39 @@ class IntcodeProgram:
                 input_values = [int(str_num) for str_num in line.split(',')]
                 result = self.run(input_values)
                 return result
+
+    def get_instruction_set(self, instruction):
+        # depending on the instruction we will parse the digits in some fashion
+        instruction_set = []
+        opcode = instruction % 100
+        instruction_set.append(opcode)
+        instruction = int(instruction / 100)
+
+        if opcode == self.Opcodes.ADD.value or opcode == self.Opcodes.MUL.value:
+            # look for three params
+            for i in range(3):
+                mode = instruction % 10
+                instruction = int(instruction / 10)
+                instruction_set.append(mode)
+        elif opcode == self.Opcodes.SAVE.value or opcode == self.Opcodes.READ.value:
+            # look for 2 params
+            for i in range(1):
+                mode = instruction % 10
+                instruction = int(instruction / 10)
+                instruction_set.append(mode)
+        elif opcode == self.Opcodes.JUMP_T.value or opcode == self.Opcodes.JUMP_F.value:
+            # look for 2 params
+            for i in range(2):
+                mode = instruction % 10
+                instruction = int(instruction / 10)
+                instruction_set.append(mode)
+        elif opcode == self.Opcodes.EQUAL.value or opcode == self.Opcodes.LESS_THAN.value:
+            # look for 3 params
+            for i in range(3):
+                mode = instruction % 10
+                instruction = int(instruction / 10)
+                instruction_set.append(mode)
+        return instruction_set
 
     def add(self, input_codes, instruction_set, instruction_pointer):
         [mode_1, mode_2, mode_3] = instruction_set[1:]
@@ -102,31 +134,31 @@ class IntcodeProgram:
         [mode_1, mode_2, mode_3] = instruction_set[1:]
         param_1 = input_codes[instruction_pointer + 1]
         param_2 = input_codes[instruction_pointer + 2]
-        param_3 = input_codes[instruction_pointer + 2]
+        param_3 = input_codes[instruction_pointer + 3]
 
         value_1 = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
         value_2 = param_2 if mode_2 == self.Modes.IMMEDIATE.value else input_codes[param_2]
-        value_3 = param_3 if mode_3 == self.Modes.IMMEDIATE.value else input_codes[param_3]
+        save_indx = param_3 if mode_3 == self.Modes.POSITION.value else input_codes[param_3]
 
         if value_1 < value_2:
-            input_codes[value_3] = 1
+            input_codes[save_indx] = 1
         else:
-            input_codes[value_3] = 0
+            input_codes[save_indx] = 0
 
     def equal(self, input_codes, instruction_set, instruction_pointer):
         [mode_1, mode_2, mode_3] = instruction_set[1:]
         param_1 = input_codes[instruction_pointer + 1]
         param_2 = input_codes[instruction_pointer + 2]
-        param_3 = input_codes[instruction_pointer + 2]
+        param_3 = input_codes[instruction_pointer + 3]
 
         value_1 = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
         value_2 = param_2 if mode_2 == self.Modes.IMMEDIATE.value else input_codes[param_2]
-        value_3 = param_3 if mode_3 == self.Modes.IMMEDIATE.value else input_codes[param_3]
+        save_idx = param_3 if mode_3 == self.Modes.POSITION.value else input_codes[param_3]
 
         if value_1 == value_2:
-            input_codes[value_3] = 1
+            input_codes[save_idx] = 1
         else:
-            input_codes[value_3] = 0
+            input_codes[save_idx] = 0
 
     def run(self, input_codes):
         instruction_pointer = 0
@@ -149,42 +181,21 @@ class IntcodeProgram:
             elif opcode == self.Opcodes.READ.value:
                 self.output(input_codes, instruction_set, instruction_pointer)
                 instruction_pointer += 2
-            elif opcode == self.Opcodes.JUMP_T:
+            elif opcode == self.Opcodes.JUMP_T.value:
                 new_pointer = self.jump_t(input_codes, instruction_set, instruction_pointer)
                 instruction_pointer = new_pointer if instruction_pointer is not None else instruction_pointer
-            elif opcode == self.Opcodes.JUMP_F:
+            elif opcode == self.Opcodes.JUMP_F.value:
                 new_pointer = self.jump_f(input_codes, instruction_set, instruction_pointer)
                 instruction_pointer = new_pointer if instruction_pointer is not None else instruction_pointer
-            elif opcode == self.Opcodes.LESS_THAN:
+            elif opcode == self.Opcodes.LESS_THAN.value:
                 self.less_than(input_codes, instruction_set, instruction_pointer)
                 instruction_pointer += 4
-            elif opcode == self.Opcodes.EQUAL:
+            elif opcode == self.Opcodes.EQUAL.value:
                 self.equal(input_codes, instruction_set, instruction_pointer)
                 instruction_pointer += 4
             else:
                 break
         return input_codes
-
-    def get_instruction_set(self, instruction):
-        # depending on the instruction we will parse the digits in some fashion
-        instruction_set = []
-        opcode = instruction % 100
-        instruction_set.append(opcode)
-        instruction = int(instruction / 100)
-
-        if opcode == self.Opcodes.ADD.value or opcode == self.Opcodes.MUL.value:
-            # look for three params
-            for i in range(3):
-                mode = instruction % 10
-                instruction = int(instruction / 10)
-                instruction_set.append(mode)
-        elif opcode == self.Opcodes.SAVE.value or opcode == self.Opcodes.READ.value:
-            # look for 2 params
-            for i in range(1):
-                mode = instruction % 10
-                instruction = int(instruction / 10)
-                instruction_set.append(mode)
-        return instruction_set
 
     def compute_noun_verb(self, file_input):
         '''
@@ -211,17 +222,30 @@ class IntcodeProgram:
 if __name__ == "__main__":
     sol = IntcodeProgram()
 
-    input_list = [1002, 4, 3, 4, 33]
-    result = sol.run(input_list)
-    assert (result == [1002, 4, 3, 4, 99])
+    # input_list = [1002, 4, 3, 4, 33]
+    # result = sol.run(input_list)
+    # assert (result == [1002, 4, 3, 4, 99])
+    #
+    # input_list = [1101, 100, -1, 4, 0]
+    # result = sol.run(input_list)
+    # assert (result == [1101, 100, -1, 4, 99])
+    #
+    # input_list = [3, 0, 4, 0, 99]
+    # result = sol.run(input_list)
+    # # assert (result == [50, 0, 4, 0, 99]) # when input is 50
+    #
+    # result = sol.run_intcode("input2.txt")
+    # assert result[223] == 13818007
 
-    input_list = [1101, 100, -1, 4, 0]
-    result = sol.run(input_list)
-    assert (result == [1101, 100, -1, 4, 99])
+    # input_list = [3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8]
+    # result = sol.run(input_list)
+    # assert (result == [3, 9, 8, 9, 10, 9, 4, 9, 99, 1, 8]) # when input is 8
+    # result = sol.run(input_list)
+    # assert (result == [3, 9, 8, 9, 10, 9, 4, 9, 99, 0, 8]) # when input is anything else
 
-    input_list = [3, 0, 4, 0, 99]
-    result = sol.run(input_list)
-    # assert (result == [50, 0, 4, 0, 99]) # when input is 50
-
-    result = sol.run_intcode("input2.txt")
-    # print(result)
+    # input_list = [3, 9, 7, 9, 10, 9, 4, 9, 99, -1, 8]
+    # result = sol.run(input_list)
+    # assert result == [3, 9, 7, 9, 10, 9, 4, 9, 99, 0, 8] # when output is > 8
+    # assert (result == )
+    # result = sol.run(input_list)
+    # assert result == [3, 9, 7, 9, 10, 9, 4, 9, 99, 1, 8] # when output is < 8
