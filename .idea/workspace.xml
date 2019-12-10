@@ -219,6 +219,11 @@
           <line>82</line>
           <option name="timeStamp" value="50" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Day_5/IntcodeProgram.py</url>
+          <line>79</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

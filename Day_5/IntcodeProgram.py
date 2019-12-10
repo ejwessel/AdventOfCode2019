@@ -27,9 +27,9 @@ class IntcodeProgram:
 
     def run(self, input_codes):
         # every 4 digits is an opcode
-        i = 0
+        program_counter = 0
         while True:
-            instruction = input_codes[i]
+            instruction = input_codes[program_counter]
             instruction_set = self.get_instruction_set(instruction)
             opcode = instruction_set[0]
 
@@ -38,9 +38,9 @@ class IntcodeProgram:
             elif opcode == self.ADD:
                 # add
                 [mode_1, mode_2, mode_3] = instruction_set[1:]
-                param_1 = input_codes[i + 1]
-                param_2 = input_codes[i + 2]
-                param_3 = input_codes[i + 3]
+                param_1 = input_codes[program_counter + 1]
+                param_2 = input_codes[program_counter + 2]
+                param_3 = input_codes[program_counter + 3]
 
                 value_1 = param_1 if mode_1 == self.IMMEDIATE else input_codes[param_1]
                 value_2 = param_2 if mode_2 == self.IMMEDIATE else input_codes[param_2]
@@ -48,13 +48,13 @@ class IntcodeProgram:
 
                 save_idx = param_3 if mode_3 == self.POSITION else input_codes[param_3]
                 input_codes[save_idx] = summed_val
-                i += 4
+                program_counter += 4
             elif opcode == self.MUL:
                 # multiply
                 [mode_1, mode_2, mode_3] = instruction_set[1:]
-                param_1 = input_codes[i + 1]
-                param_2 = input_codes[i + 2]
-                param_3 = input_codes[i + 3]
+                param_1 = input_codes[program_counter + 1]
+                param_2 = input_codes[program_counter + 2]
+                param_3 = input_codes[program_counter + 3]
 
                 value_1 = param_1 if mode_1 == self.IMMEDIATE else input_codes[param_1]
                 value_2 = param_2 if mode_2 == self.IMMEDIATE else input_codes[param_2]
@@ -62,23 +62,23 @@ class IntcodeProgram:
 
                 save_idx = param_3 if mode_3 == self.POSITION else input_codes[param_3]
                 input_codes[save_idx] = product_val
-                i += 4
+                program_counter += 4
             elif opcode == self.SAVE:
                 # Save
                 value = input("ID of the system to test: ")
 
                 [mode_1] = instruction_set[1:]
-                param_1 = input_codes[i + 1]
+                param_1 = input_codes[program_counter + 1]
                 save_idx = param_1 if mode_1 == self.POSITION else input_codes[param_1]
 
                 input_codes[save_idx] = int(value)
-                i += 2
+                program_counter += 2
             elif opcode == self.READ:
                 # output
                 [mode_1] = instruction_set[1:]
-                param_1 = input_codes[i + 1]
+                param_1 = input_codes[program_counter + 1]
                 print(param_1) if mode_1 == self.IMMEDIATE else print(input_codes[param_1])
-                i += 2
+                program_counter += 2
             else:
                 break
         return input_codes
