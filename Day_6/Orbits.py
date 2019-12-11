@@ -62,6 +62,10 @@ if __name__ == "__main__":
 
     #PART 2
 
+    you_set = set(sol.closure['YOU'])
+    san_set = set(sol.closure['SAN'])
+    diff = you_set.symmetric_difference(san_set)
+    assert len(diff) == 457
 
 
 
