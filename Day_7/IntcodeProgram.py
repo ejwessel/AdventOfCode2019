@@ -17,7 +17,7 @@ class IntcodeProgram:
         POSITION = 0
         IMMEDIATE = 1
 
-    def run_intcode(self, file_input):
+    def run_intcode_max_singal(self, file_input):
         '''
         To do this, before running the program,
         replace position 1 with the value 12 and
@@ -29,7 +29,10 @@ class IntcodeProgram:
             for line in data:
                 # list comprehension to turn all strings in list to ints
                 input_values = [int(str_num) for str_num in line.split(',')]
-                result = self.run(input_values)
+
+                # find best combination of input values for thruster signal
+
+                result = self.run(input_values, 0)
                 return result
 
     def get_instruction_set(self, instruction):
@@ -91,8 +94,9 @@ class IntcodeProgram:
         save_idx = param_3 if mode_3 == self.Modes.POSITION.value else input_codes[param_3]
         input_codes[save_idx] = product_val
 
-    def save(self, input_codes, instruction_set, instruction_pointer):
-        value = input("ID of the system to test: ")
+    def save(self, input_codes, input_signal, instruction_set, instruction_pointer):
+        # value = input("ID of the system to test: ")
+        value = input_signal
         [mode_1] = instruction_set[1:]
         param_1 = input_codes[instruction_pointer + 1]
         save_idx = param_1 if mode_1 == self.Modes.POSITION.value else input_codes[param_1]
@@ -102,7 +106,8 @@ class IntcodeProgram:
     def output(self, input_codes, instruction_set, instruction_pointer):
         [mode_1] = instruction_set[1:]
         param_1 = input_codes[instruction_pointer + 1]
-        print(param_1) if mode_1 == self.Modes.IMMEDIATE.value else print(input_codes[param_1])
+        return_val = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
+        return return_val
 
     def jump_t(self, input_codes, instruction_set, instruction_pointer):
         [mode_1, mode_2] = instruction_set[1:]
@@ -160,7 +165,7 @@ class IntcodeProgram:
         else:
             input_codes[save_idx] = 0
 
-    def run(self, input_codes):
+    def run(self, input_codes, input_signal):
         instruction_pointer = 0
         while True:
             instruction = input_codes[instruction_pointer]
@@ -176,11 +181,11 @@ class IntcodeProgram:
                 self.mul(input_codes, instruction_set, instruction_pointer)
                 instruction_pointer += 4
             elif opcode == self.Opcodes.SAVE.value:
-                self.save(input_codes, instruction_set, instruction_pointer)
+                self.save(input_codes, input_signal[0], instruction_set, instruction_pointer)
+                input_signal = input_signal[1:]
                 instruction_pointer += 2
             elif opcode == self.Opcodes.READ.value:
-                self.output(input_codes, instruction_set, instruction_pointer)
-                instruction_pointer += 2
+                return self.output(input_codes, instruction_set, instruction_pointer)
             elif opcode == self.Opcodes.JUMP_T.value:
                 new_pointer = self.jump_t(input_codes, instruction_set, instruction_pointer)
                 instruction_pointer = new_pointer if new_pointer is not None else instruction_pointer + 3
@@ -195,52 +200,27 @@ class IntcodeProgram:
                 instruction_pointer += 4
             else:
                 break
-        return input_codes
-
-    def compute_noun_verb(self, file_input):
-        '''
-        To do this, before running the program,
-        replace position 1 with the value 12 and
-        replace position 2 with the value 2.
-        What value is left at position 0 after the program halts?
-        '''
-
-        with open(file_input) as data:
-            for line in data:
-                input_values_initial = [int(str_num) for str_num in line.split(',')]
-                for noun in range(99):
-                    for verb in range(99):
-                        input_values = input_values_initial.copy()
-                        input_values[1] = noun
-                        input_values[2] = verb
-                        result = self.run(input_values)
-                        if result[0] == 19690720:
-                            return 100 * noun + verb
-        return 0
 
 
 if __name__ == "__main__":
     sol = IntcodeProgram()
 
-    # input_codes = [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0]
-    # sol.run(input_codes)
-    # sol.run(input_codes)
-    # sol.run(input_codes)
-    # sol.run(input_codes)
-    # sol.run(input_codes)
-    #
-    # input_codes = [3, 23, 3, 24, 1002, 24, 10, 24, 1002, 23, -1, 23,
-    #                101, 5, 23, 23, 1, 24, 23, 23, 4, 23, 99, 0, 0]
-    # sol.run(input_codes)
-    # sol.run(input_codes)
-    # sol.run(input_codes)
-    # sol.run(input_codes)
-    # sol.run(input_codes)
+    input_codes = [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0]
+    output = 0
+    for num in [4, 3, 2, 1, 0]:
+        output = sol.run(input_codes, [num, output])
+    assert output == 43210
 
-    # input_codes = [3, 31, 3, 32, 1002, 32, 10, 32, 1001, 31, -2, 31, 1007, 31, 0, 33,
-    #                1002, 33, 7, 33, 1, 33, 31, 31, 1, 32, 31, 31, 4, 31, 99, 0, 0, 0]
-    # sol.run(input_codes)
-    # sol.run(input_codes)
-    # sol.run(input_codes)
-    # sol.run(input_codes)
-    # sol.run(input_codes)
+    input_codes = [3, 23, 3, 24, 1002, 24, 10, 24, 1002, 23, -1, 23,
+                   101, 5, 23, 23, 1, 24, 23, 23, 4, 23, 99, 0, 0]
+    output = 0
+    for num in [0, 1, 2, 3, 4]:
+        output = sol.run(input_codes, [num, output])
+    assert output == 54321
+
+    input_codes = [3, 31, 3, 32, 1002, 32, 10, 32, 1001, 31, -2, 31, 1007, 31, 0, 33,
+                   1002, 33, 7, 33, 1, 33, 31, 31, 1, 32, 31, 31, 4, 31, 99, 0, 0, 0]
+    output = 0
+    for num in [1, 0, 4, 3, 2]:
+        output = sol.run(input_codes, [num, output])
+    assert output == 65210
