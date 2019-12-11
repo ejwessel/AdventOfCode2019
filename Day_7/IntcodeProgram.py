@@ -18,7 +18,7 @@ class IntcodeProgram:
         POSITION = 0
         IMMEDIATE = 1
 
-    def run_intcode_max_signal(self, phase_settings, file_input):
+    def run_intcode_max_signal(self, phase_settings, start_signal, file_input):
         '''
         To do this, before running the program,
         replace position 1 with the value 12 and
@@ -31,17 +31,24 @@ class IntcodeProgram:
                 # list comprehension to turn all strings in list to ints
                 input_values = [int(str_num) for str_num in line.split(',')]
 
-                return self.run_max_signal([0, 1, 2, 3, 4], input_values)
+                return self.run_max_signal(phase_settings, input_values, start_signal)
 
-    def run_max_signal(self, phase_settings, input_values):
+    def run_max_signal(self, phase_settings, input_values, start_signal):
         permuted_tuples = permutations(phase_settings)
         max_signal = 0
         for perm in permuted_tuples:
-            output = 0
+            signal = start_signal
+
             for item in perm:
-                output = self.run(input_values, [item, output])
-                if output > max_signal:
-                    max_signal = output
+
+                # for a given permutation I need to keep feeding it into the same thing
+
+                output = self.run(input_values, [item, signal])
+                signal = output[0]
+                input_values = output[1:]
+
+            if signal > max_signal:
+                max_signal = signal
         return max_signal
 
     def get_instruction_set(self, instruction):
@@ -194,7 +201,7 @@ class IntcodeProgram:
                 input_signal = input_signal[1:]
                 instruction_pointer += 2
             elif opcode == self.Opcodes.READ.value:
-                return self.output(input_codes, instruction_set, instruction_pointer)
+                return [self.output(input_codes, instruction_set, instruction_pointer)] + input_codes
             elif opcode == self.Opcodes.JUMP_T.value:
                 new_pointer = self.jump_t(input_codes, instruction_set, instruction_pointer)
                 instruction_pointer = new_pointer if new_pointer is not None else instruction_pointer + 3
@@ -210,24 +217,33 @@ class IntcodeProgram:
             else:
                 break
 
-
 if __name__ == "__main__":
     sol = IntcodeProgram()
 
+    # part 1
+
     input_codes = [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0]
-    result = sol.run_max_signal([0, 1, 2, 3, 4], input_codes)
+    result = sol.run_max_signal([0, 1, 2, 3, 4], input_codes, 0)
     assert result == 43210
 
     input_codes = [3, 23, 3, 24, 1002, 24, 10, 24, 1002, 23, -1, 23,
                    101, 5, 23, 23, 1, 24, 23, 23, 4, 23, 99, 0, 0]
-    result = sol.run_max_signal([0, 1, 2, 3, 4], input_codes)
+    result = sol.run_max_signal([0, 1, 2, 3, 4], input_codes, 0)
     assert result == 54321
 
     input_codes = [3, 31, 3, 32, 1002, 32, 10, 32, 1001, 31, -2, 31, 1007, 31, 0, 33,
                    1002, 33, 7, 33, 1, 33, 31, 31, 1, 32, 31, 31, 4, 31, 99, 0, 0, 0]
-    result = sol.run_max_signal([0, 1, 2, 3, 4], input_codes)
+    result = sol.run_max_signal([0, 1, 2, 3, 4], input_codes, 0)
     assert result == 65210
 
-    result = sol.run_intcode_max_signal([0, 1, 2, 3, 4], "input.txt")
+    result = sol.run_intcode_max_signal([0, 1, 2, 3, 4], 0, "input.txt")
     assert result == 17406
+
+    # part 2
+
+    input_codes = [3, 26, 1001, 26, -4, 26, 3, 27, 1002, 27, 2, 27, 1, 27, 26,
+                   27, 4, 27, 1001, 28, -1, 28, 1005, 28, 6, 99, 0, 0, 5]
+    result = sol.run_max_signal([5, 6, 7, 8, 9], input_codes, 0)
+    print(result)
+
 
