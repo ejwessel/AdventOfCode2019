@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e57c5a47-5a76-4794-bd11-d51071ec91f4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Day_6/Orbits.py" beforeDir="false" afterPath="$PROJECT_DIR$/Day_6/Orbits.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,29 +20,23 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1UU2YLG6Mszapmge2SP4fYNu9EM" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Day_5" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/Day_5" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Python.Orbits">
+  <component name="RunManager" selected="Python.IntcodeProgram (2)">
     <configuration name="IntcodeProgram (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AdventOfCode2019" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -65,7 +58,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="IntcodeProgram" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="IntcodeProgram (2)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AdventOfCode2019" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -73,11 +66,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Day_2" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Day_7" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Day_2/IntcodeProgram.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Day_7/IntcodeProgram.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -151,15 +144,25 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.IntcodeProgram (2)" />
         <item itemvalue="Python.Orbits" />
         <item itemvalue="Python.IntcodeProgram (1)" />
         <item itemvalue="Python.SecureContainer" />
         <item itemvalue="Python.ManhattanDistance" />
-        <item itemvalue="Python.IntcodeProgram" />
       </list>
     </recent_temporary>
   </component>
   <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
     <option name="showServicesTree" value="false" />
   </component>
   <component name="SvnConfiguration">
