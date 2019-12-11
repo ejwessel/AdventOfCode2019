@@ -1,4 +1,5 @@
 from enum import Enum
+from itertools import permutations
 
 
 class IntcodeProgram:
@@ -17,7 +18,7 @@ class IntcodeProgram:
         POSITION = 0
         IMMEDIATE = 1
 
-    def run_intcode_max_singal(self, file_input):
+    def run_intcode_max_signal(self, file_input):
         '''
         To do this, before running the program,
         replace position 1 with the value 12 and
@@ -30,10 +31,18 @@ class IntcodeProgram:
                 # list comprehension to turn all strings in list to ints
                 input_values = [int(str_num) for str_num in line.split(',')]
 
-                # find best combination of input values for thruster signal
+                return self.run_max_signal(input_values)
 
-                result = self.run(input_values, 0)
-                return result
+    def run_max_signal(self, input_values):
+        permuted_tuples = permutations([0, 1, 2, 3, 4])
+        max_signal = 0
+        for perm in permuted_tuples:
+            output = 0
+            for item in perm:
+                output = self.run(input_values, [item, output])
+                if output > max_signal:
+                    max_signal = output
+        return max_signal
 
     def get_instruction_set(self, instruction):
         # depending on the instruction we will parse the digits in some fashion
@@ -206,21 +215,19 @@ if __name__ == "__main__":
     sol = IntcodeProgram()
 
     input_codes = [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0]
-    output = 0
-    for num in [4, 3, 2, 1, 0]:
-        output = sol.run(input_codes, [num, output])
-    assert output == 43210
+    result = sol.run_max_signal(input_codes)
+    assert result == 43210
 
     input_codes = [3, 23, 3, 24, 1002, 24, 10, 24, 1002, 23, -1, 23,
                    101, 5, 23, 23, 1, 24, 23, 23, 4, 23, 99, 0, 0]
-    output = 0
-    for num in [0, 1, 2, 3, 4]:
-        output = sol.run(input_codes, [num, output])
-    assert output == 54321
+    result = sol.run_max_signal(input_codes)
+    assert result == 54321
 
     input_codes = [3, 31, 3, 32, 1002, 32, 10, 32, 1001, 31, -2, 31, 1007, 31, 0, 33,
                    1002, 33, 7, 33, 1, 33, 31, 31, 1, 32, 31, 31, 4, 31, 99, 0, 0, 0]
-    output = 0
-    for num in [1, 0, 4, 3, 2]:
-        output = sol.run(input_codes, [num, output])
-    assert output == 65210
+    result = sol.run_max_signal(input_codes)
+    assert result == 65210
+
+    result = sol.run_intcode_max_signal("input.txt")
+    assert result == 17406
+
