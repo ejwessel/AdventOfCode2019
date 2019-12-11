@@ -18,7 +18,7 @@ class IntcodeProgram:
         POSITION = 0
         IMMEDIATE = 1
 
-    def run_intcode_max_signal(self, file_input):
+    def run_intcode_max_signal(self, phase_settings, file_input):
         '''
         To do this, before running the program,
         replace position 1 with the value 12 and
@@ -31,10 +31,10 @@ class IntcodeProgram:
                 # list comprehension to turn all strings in list to ints
                 input_values = [int(str_num) for str_num in line.split(',')]
 
-                return self.run_max_signal(input_values)
+                return self.run_max_signal([0, 1, 2, 3, 4], input_values)
 
-    def run_max_signal(self, input_values):
-        permuted_tuples = permutations([0, 1, 2, 3, 4])
+    def run_max_signal(self, phase_settings, input_values):
+        permuted_tuples = permutations(phase_settings)
         max_signal = 0
         for perm in permuted_tuples:
             output = 0
@@ -215,19 +215,19 @@ if __name__ == "__main__":
     sol = IntcodeProgram()
 
     input_codes = [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0]
-    result = sol.run_max_signal(input_codes)
+    result = sol.run_max_signal([0, 1, 2, 3, 4], input_codes)
     assert result == 43210
 
     input_codes = [3, 23, 3, 24, 1002, 24, 10, 24, 1002, 23, -1, 23,
                    101, 5, 23, 23, 1, 24, 23, 23, 4, 23, 99, 0, 0]
-    result = sol.run_max_signal(input_codes)
+    result = sol.run_max_signal([0, 1, 2, 3, 4], input_codes)
     assert result == 54321
 
     input_codes = [3, 31, 3, 32, 1002, 32, 10, 32, 1001, 31, -2, 31, 1007, 31, 0, 33,
                    1002, 33, 7, 33, 1, 33, 31, 31, 1, 32, 31, 31, 4, 31, 99, 0, 0, 0]
-    result = sol.run_max_signal(input_codes)
+    result = sol.run_max_signal([0, 1, 2, 3, 4], input_codes)
     assert result == 65210
 
-    result = sol.run_intcode_max_signal("input.txt")
+    result = sol.run_intcode_max_signal([0, 1, 2, 3, 4], "input.txt")
     assert result == 17406
 
