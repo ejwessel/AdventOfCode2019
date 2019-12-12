@@ -34,16 +34,16 @@ class IntcodeProgram:
                 return self.run_max_signal(phase_settings, input_values, start_signal)
 
     def run_max_signal(self, phase_settings, input_values, start_signal):
-        permuted_tuples = permutations(phase_settings)
+        permuted_phases = permutations(phase_settings)
         max_signal = 0
-        for perm in permuted_tuples:
+        for phases in permuted_phases:
             signal = start_signal
 
-            for item in perm:
+            for phase in phases:
 
                 # for a given permutation I need to keep feeding it into the same thing
 
-                output = self.run(input_values, [item, signal])
+                output = self.run(input_values, [phase, signal])
                 signal = output[0]
                 input_values = output[1:]
 
