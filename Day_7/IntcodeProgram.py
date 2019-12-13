@@ -159,7 +159,7 @@ class IntcodeProgram:
             opcode = instruction_set[0]
 
             if opcode == self.Opcodes.HALT.value:
-                break
+                return "terminated"
             elif opcode == self.Opcodes.ADD.value:
                 self.add(self.program, instruction_set, self.instruction_pointer)
                 self.instruction_pointer += 4
@@ -168,7 +168,7 @@ class IntcodeProgram:
                 self.instruction_pointer += 4
             elif opcode == self.Opcodes.SAVE.value:
                 if len(input_signal) == 0:
-                    break
+                    return "waiting"
                 self.save(self.program, input_signal[0], instruction_set, self.instruction_pointer)
                 self.instruction_pointer += 2
                 input_signal = input_signal[1:]
@@ -230,6 +230,30 @@ def run_max_signal(phase_settings, program):
         if input_signal > max_signal:
             max_signal = input_signal
 
+    return max_signal
+
+
+def run_through_amplifiers(amplifiers, input_signal):
+    for amp in amplifiers:
+        input_signal = amp.run([input_signal])
+    return input_signal
+
+
+def run_max_signal_feedback(phase_settings, program):
+    permuted_phases = permutations(phase_settings)
+    max_signal = 0
+
+    for phases in permuted_phases:
+        amplifiers = create_amplifiers(phases, program)
+        input_signal = 0
+        while True:
+            new_output = run_through_amplifiers(amplifiers, input_signal)
+            if new_output is "terminated":
+                break
+            input_signal = new_output
+
+        if input_signal > max_signal:
+            max_signal = input_signal
     return max_signal
 
 
@@ -369,4 +393,17 @@ if __name__ == "__main__":
 
     signal = run_intcode_max_signal([0, 1, 2, 3, 4], "input.txt")
     assert signal == 17406
+    print(signal)
+
+    # ===============================
+
+    program = [3, 26, 1001, 26, -4, 26, 3, 27, 1002, 27, 2, 27, 1, 27, 26,
+               27, 4, 27, 1001, 28, -1, 28, 1005, 28, 6, 99, 0, 0, 5]
+    signal = run_max_signal_feedback([5, 6, 7, 8, 9], program)
+    print(signal)
+
+    program = [3, 52, 1001, 52, -5, 52, 3, 53, 1, 52, 56, 54, 1007, 54, 5, 55, 1005, 55, 26, 1001, 54,
+               -5, 54, 1105, 1, 12, 1, 53, 54, 53, 1008, 54, 0, 55, 1001, 55, 1, 55, 2, 53, 55, 53, 4,
+               53, 1001, 56, -1, 56, 1005, 56, 6, 99, 0, 0, 0, 0, 10]
+    signal = run_max_signal_feedback([5, 6, 7, 8, 9], program)
     print(signal)
