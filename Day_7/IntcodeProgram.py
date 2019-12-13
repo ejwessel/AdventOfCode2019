@@ -234,124 +234,121 @@ def run_max_signal(phase_settings, program):
 
 
 if __name__ == "__main__":
-    # program = [3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([8])
-    # assert result == 1
-    # sol = IntcodeProgram(program)
-    # result = sol.run([9])
-    # assert result == 0
-    # sol = IntcodeProgram(program)
-    # result = sol.run([7])
-    # assert result == 0
-    #
-    # program = [3, 9, 7, 9, 10, 9, 4, 9, 99, -1, 8]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([7])
-    # assert result == 1
-    # sol = IntcodeProgram(program)
-    # result = sol.run([8])
-    # assert result == 0
-    # sol = IntcodeProgram(program)
-    # result = sol.run([9])
-    # assert result == 0
-    #
-    # program = [3, 3, 1108, -1, 8, 3, 4, 3, 99]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([7])
-    # assert result == 0
-    # sol = IntcodeProgram(program)
-    # result = sol.run([8])
-    # assert result == 1
-    # sol = IntcodeProgram(program)
-    # result = sol.run([9])
-    # assert result == 0
-    #
-    # program = [3, 3, 1107, -1, 8, 3, 4, 3, 99]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([7])
-    # assert result == 1
-    # sol = IntcodeProgram(program)
-    # result = sol.run([8])
-    # assert result == 0
-    # sol = IntcodeProgram(program)
-    # result = sol.run([9])
-    # assert result == 0
-    #
-    # program = [3, 12, 6, 12, 15, 1, 13, 14, 13, 4, 13, 99, -1, 0, 1, 9]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([0])
-    # assert result == 0
-    # sol = IntcodeProgram(program)
-    # result = sol.run([1])
-    # assert result == 1
-    #
-    # program = [3, 3, 1105, -1, 9, 1101, 0, 0, 12, 4, 12, 99, 1]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([0])
-    # assert result == 0
-    # sol = IntcodeProgram(program)
-    # result = sol.run([1])
-    # assert result == 1
-    #
-    # program = [3, 21, 1008, 21, 8, 20, 1005, 20, 22, 107, 8, 21, 20, 1006, 20, 31,
-    #            1106, 0, 36, 98, 0, 0, 1002, 21, 125, 20, 4, 20, 1105, 1, 46, 104,
-    #            999, 1105, 1, 46, 1101, 1000, 1, 20, 4, 20, 1105, 1, 46, 98, 99]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([7])
-    # assert result == 999
-    # sol = IntcodeProgram(program)
-    # result = sol.run([8])
-    # assert result == 1000
-    # sol = IntcodeProgram(program)
-    # result = sol.run([9])
-    # assert result == 1001
+    program = [3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8]
+    sol = IntcodeProgram(program)
+    result = sol.run([8])
+    assert result == 1
+    sol = IntcodeProgram(program)
+    result = sol.run([9])
+    assert result == 0
+    sol = IntcodeProgram(program)
+    result = sol.run([7])
+    assert result == 0
+
+    program = [3, 9, 7, 9, 10, 9, 4, 9, 99, -1, 8]
+    sol = IntcodeProgram(program)
+    result = sol.run([7])
+    assert result == 1
+    sol = IntcodeProgram(program)
+    result = sol.run([8])
+    assert result == 0
+    sol = IntcodeProgram(program)
+    result = sol.run([9])
+    assert result == 0
+
+    program = [3, 3, 1108, -1, 8, 3, 4, 3, 99]
+    sol = IntcodeProgram(program)
+    result = sol.run([7])
+    assert result == 0
+    sol = IntcodeProgram(program)
+    result = sol.run([8])
+    assert result == 1
+    sol = IntcodeProgram(program)
+    result = sol.run([9])
+    assert result == 0
+
+    program = [3, 3, 1107, -1, 8, 3, 4, 3, 99]
+    sol = IntcodeProgram(program)
+    result = sol.run([7])
+    assert result == 1
+    sol = IntcodeProgram(program)
+    result = sol.run([8])
+    assert result == 0
+    sol = IntcodeProgram(program)
+    result = sol.run([9])
+    assert result == 0
+
+    program = [3, 12, 6, 12, 15, 1, 13, 14, 13, 4, 13, 99, -1, 0, 1, 9]
+    sol = IntcodeProgram(program)
+    result = sol.run([0])
+    assert result == 0
+    sol = IntcodeProgram(program)
+    result = sol.run([1])
+    assert result == 1
+
+    program = [3, 3, 1105, -1, 9, 1101, 0, 0, 12, 4, 12, 99, 1]
+    sol = IntcodeProgram(program)
+    result = sol.run([0])
+    assert result == 0
+    sol = IntcodeProgram(program)
+    result = sol.run([1])
+    assert result == 1
+
+    program = [3, 21, 1008, 21, 8, 20, 1005, 20, 22, 107, 8, 21, 20, 1006, 20, 31,
+               1106, 0, 36, 98, 0, 0, 1002, 21, 125, 20, 4, 20, 1105, 1, 46, 104,
+               999, 1105, 1, 46, 1101, 1000, 1, 20, 4, 20, 1105, 1, 46, 98, 99]
+    sol = IntcodeProgram(program)
+    result = sol.run([7])
+    assert result == 999
+    sol = IntcodeProgram(program)
+    result = sol.run([8])
+    assert result == 1000
+    sol = IntcodeProgram(program)
+    result = sol.run([9])
+    assert result == 1001
 
     # ===============================
 
-    # program = [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([4, 0])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([3, result])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([2, result])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([1, result])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([0, result])
-    # assert result == 43210
-    # print(result)
-    #
-    # program = [3, 31, 3, 32, 1002, 32, 10, 32, 1001, 31, -2, 31, 1007, 31, 0, 33,
-    #            1002, 33, 7, 33, 1, 33, 31, 31, 1, 32, 31, 31, 4, 31, 99, 0, 0, 0]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([1, 0])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([0, result])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([4, result])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([3, result])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([2, result])
-    # assert result == 65210
-    # print(result)
-    #
-    # program = [3, 23, 3, 24, 1002, 24, 10, 24, 1002, 23, -1, 23,
-    #            101, 5, 23, 23, 1, 24, 23, 23, 4, 23, 99, 0, 0]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([0, 0])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([1, result])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([2, result])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([3, result])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([4, result])
-    # assert result == 54321
-    # print(result)
+    program = [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0]
+    sol = IntcodeProgram(program)
+    result = sol.run([4, 0])
+    sol = IntcodeProgram(program)
+    result = sol.run([3, result])
+    sol = IntcodeProgram(program)
+    result = sol.run([2, result])
+    sol = IntcodeProgram(program)
+    result = sol.run([1, result])
+    sol = IntcodeProgram(program)
+    result = sol.run([0, result])
+    assert result == 43210
+
+    program = [3, 31, 3, 32, 1002, 32, 10, 32, 1001, 31, -2, 31, 1007, 31, 0, 33,
+               1002, 33, 7, 33, 1, 33, 31, 31, 1, 32, 31, 31, 4, 31, 99, 0, 0, 0]
+    sol = IntcodeProgram(program)
+    result = sol.run([1, 0])
+    sol = IntcodeProgram(program)
+    result = sol.run([0, result])
+    sol = IntcodeProgram(program)
+    result = sol.run([4, result])
+    sol = IntcodeProgram(program)
+    result = sol.run([3, result])
+    sol = IntcodeProgram(program)
+    result = sol.run([2, result])
+    assert result == 65210
+
+    program = [3, 23, 3, 24, 1002, 24, 10, 24, 1002, 23, -1, 23,
+               101, 5, 23, 23, 1, 24, 23, 23, 4, 23, 99, 0, 0]
+    sol = IntcodeProgram(program)
+    result = sol.run([0, 0])
+    sol = IntcodeProgram(program)
+    result = sol.run([1, result])
+    sol = IntcodeProgram(program)
+    result = sol.run([2, result])
+    sol = IntcodeProgram(program)
+    result = sol.run([3, result])
+    sol = IntcodeProgram(program)
+    result = sol.run([4, result])
+    assert result == 54321
 
     program = [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0]
     signal = run_max_signal([0, 1, 2, 3, 4], program)
