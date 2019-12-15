@@ -1,3 +1,5 @@
+from PIL import Image
+
 def parseImageFile(file_input, x, y):
     with open(file_input) as data:
         for line in data:
@@ -143,6 +145,14 @@ if __name__ == "__main__":
     final_image = ''.join(decoded_image)
     assert final_image == '111101001001100100101000010000101001001010010100001110011000100101111010000100001010011110100101000010000101001001010010100001000010010100101001011110'
 
+    # use an image library
+    cmap = {'0': (255, 255, 255),
+            '1': (0, 0, 0)}
+    data = [cmap[letter] for letter in final_image]
+    img = Image.new('RGB', (25, len(final_image) // 6), "white")
+    img.putdata(data)
+    img.show()
+
     # display the final image on the screen
     # the bits are not the answer
     final_image = final_image.replace('0', ' ')
@@ -150,4 +160,3 @@ if __name__ == "__main__":
     size = len(final_image)
     for row in range(0, size, 25):
         print(' '.join(final_image[row:row + 25]))
-

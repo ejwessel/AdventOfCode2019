@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e57c5a47-5a76-4794-bd11-d51071ec91f4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Day_8/DecodeSpaceImage.py" beforeDir="false" afterPath="$PROJECT_DIR$/Day_8/DecodeSpaceImage.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,7 +28,7 @@
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -193,22 +192,22 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state width="819" height="356" key="GridCell.Tab.0.bottom" timestamp="1576422766468">
+    <state width="819" height="356" key="GridCell.Tab.0.bottom" timestamp="1576423119750">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="819" height="356" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1576422766468" />
-    <state width="819" height="356" key="GridCell.Tab.0.center" timestamp="1576422766467">
+    <state width="819" height="356" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1576423119750" />
+    <state width="819" height="356" key="GridCell.Tab.0.center" timestamp="1576423119750">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="819" height="356" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1576422766467" />
-    <state width="819" height="356" key="GridCell.Tab.0.left" timestamp="1576422766466">
+    <state width="819" height="356" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1576423119750" />
+    <state width="819" height="356" key="GridCell.Tab.0.left" timestamp="1576423119749">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="819" height="356" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1576422766466" />
-    <state width="819" height="356" key="GridCell.Tab.0.right" timestamp="1576422766467">
+    <state width="819" height="356" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1576423119749" />
+    <state width="819" height="356" key="GridCell.Tab.0.right" timestamp="1576423119750">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="819" height="356" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1576422766467" />
+    <state width="819" height="356" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1576423119750" />
     <state width="819" height="345" key="GridCell.Tab.1.bottom" timestamp="1576420787964">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -225,10 +224,10 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="819" height="345" key="GridCell.Tab.1.right/0.23.1680.1027@0.23.1680.1027" timestamp="1576420787964" />
-    <state x="349" y="175" key="SettingsEditor" timestamp="1576199791036">
+    <state x="349" y="175" key="SettingsEditor" timestamp="1576423033158">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="349" y="175" key="SettingsEditor/0.23.1680.1027@0.23.1680.1027" timestamp="1576199791036" />
+    <state x="349" y="175" key="SettingsEditor/0.23.1680.1027@0.23.1680.1027" timestamp="1576423033158" />
     <state x="748" y="250" width="670" height="58" key="search.everywhere.popup" timestamp="1576386987898">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -304,7 +303,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Day_8/DecodeSpaceImage.py</url>
-          <line>44</line>
+          <line>46</line>
           <option name="timeStamp" value="139" />
         </line-breakpoint>
       </breakpoints>
