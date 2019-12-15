@@ -128,9 +128,24 @@ if __name__ == "__main__":
     final_image = ''.join(decoded_image)
     assert final_image == '0'
 
+    image_layers = parseImage("222210", 3, 1)
+    decoded_image = decodeImages(image_layers)
+    final_image = ''.join(decoded_image)
+    assert final_image == '210'
+
+    image_layers = parseImage("222210201", 3, 1)
+    decoded_image = decodeImages(image_layers)
+    final_image = ''.join(decoded_image)
+    assert final_image == '210'
+
     image_layers = parseImageFile("input.txt", 25, 6)
     decoded_image = decodeImages(image_layers)
-    print(decoded_image)
     final_image = ''.join(decoded_image)
-    print(final_image)
+    assert final_image == '111101001001100100101000010000101001001010010100001110011000100101111010000100001010011110100101000010000101001001010010100001000010010100101001011110'
+
+    size = len(decoded_image)
+    for row in range(0, size, 25):
+        print(' '.join(decoded_image[row:row + 25]))
+
+    # hard to see, but it says FKAHL
 
