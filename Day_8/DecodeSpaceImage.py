@@ -4,7 +4,6 @@ def parseImageFile(file_input, x, y):
             return parseImage(line, x, y)
 
 def parseImage(data_content, x, y):
-    data_content = str(data_content)
     image_layers = []
 
     while len(data_content) > 0:
@@ -36,17 +35,35 @@ def getSmallestZeroFreq(images):
             best_freq = freq
     return best_freq
 
+def decodeImages(image_layers):
+    final_image = []
+    row_size = len(image_layers[0])
+    col_size = len(image_layers[0][0])
+    for row in range(row_size):
+        for col in range(col_size):
+            # best pixel initially is transparent
+            best_pixel = '2'
+            for layer in image_layers:
+                if int(best_pixel) < int('2'):
+                    # if best_pixel has been set then we've found the top pixel
+                    break
+                elif int(layer[row][col]) < int(best_pixel):
+                    best_pixel = layer[row][col]
+            # add the best pixel
+            final_image.append(best_pixel)
+    return final_image
+
 
 if __name__ == "__main__":
 
     #Part 1
-    output = parseImage(123456789012, 3, 2)
+    output = parseImage("123456789012", 3, 2)
     image1_freq = getNumFreq(output[0])
     image2_freq = getNumFreq(output[1])
     assert image1_freq == {'1': 1, '2': 1, '3': 1, '4': 1, '5': 1, '6': 1}
     assert image2_freq == {'7': 1, '8': 1, '9': 1, '0': 1, '1': 1, '2': 1}
 
-    output = parseImage(113416700012, 3, 2)
+    output = parseImage("113416700012", 3, 2)
     image1_freq = getNumFreq(output[0])
     image2_freq = getNumFreq(output[1])
     assert image1_freq == {'1': 3, '3': 1, '4': 1, '6': 1}
@@ -76,24 +93,44 @@ if __name__ == "__main__":
 
     # seems the rule is to find the first instance of a 0 or 1 when going down layers
 
-    # inspect every pixel
-    final_image = []
+    image_layers = parseImage("0222112222120000", 2, 2)
+    decoded_image = decodeImages(image_layers)
+    final_image = ''.join(decoded_image)
+    assert final_image == '0110'
+
+    image_layers = parseImage("012", 1, 1)
+    decoded_image = decodeImages(image_layers)
+    final_image = ''.join(decoded_image)
+    assert final_image == '0'
+
+    image_layers = parseImage("2201", 1, 1)
+    decoded_image = decodeImages(image_layers)
+    final_image = ''.join(decoded_image)
+    assert final_image == '0'
+
+    image_layers = parseImage("0120", 1, 1)
+    decoded_image = decodeImages(image_layers)
+    final_image = ''.join(decoded_image)
+    assert final_image == '0'
+
+    image_layers = parseImage("2120", 1, 1)
+    decoded_image = decodeImages(image_layers)
+    final_image = ''.join(decoded_image)
+    assert final_image == '1'
+
+    image_layers = parseImage("2210", 1, 1)
+    decoded_image = decodeImages(image_layers)
+    final_image = ''.join(decoded_image)
+    assert final_image == '1'
+
+    image_layers = parseImage("2220", 1, 1)
+    decoded_image = decodeImages(image_layers)
+    final_image = ''.join(decoded_image)
+    assert final_image == '0'
+
     image_layers = parseImageFile("input.txt", 25, 6)
-    print(image_layers)
-    row_size = len(image_layers[0])
-    col_size = len(image_layers[0][0])
-    for row in row_size:
-        for col in col_size:
-            best_pixel = 3
-            for layer in len(image_layers):
-
-                # go through the layers
-                # get first number smaller than 2
-                # if best pixel has been identified break out of for loop
-                if best_pixel is 3:
-                    best_pixel = image_layers[row][col]
-
-
-
-
+    decoded_image = decodeImages(image_layers)
+    print(decoded_image)
+    final_image = ''.join(decoded_image)
+    print(final_image)
 
