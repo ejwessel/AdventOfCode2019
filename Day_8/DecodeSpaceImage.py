@@ -26,6 +26,16 @@ def getNumFreq(image):
             num_freq[row[pixel]] += 1
     return num_freq
 
+def getSmallestZeroFreq(images):
+    best_freq = None
+    for image in images:
+        freq = getNumFreq(image)
+        if best_freq is None:
+            best_freq = freq
+        elif freq['0'] < best_freq['0']:
+            best_freq = freq
+    return best_freq
+
 
 if __name__ == "__main__":
 
@@ -43,14 +53,7 @@ if __name__ == "__main__":
 
 
     output = parseImageFile("input.txt", 25, 6)
-    best_freq = None
-    for image in output:
-       freq = getNumFreq(image)
-       if best_freq is None:
-           best_freq = freq
-       elif freq['0'] < best_freq['0']:
-           best_freq = freq
-
-    product = best_freq['1'] * best_freq['2']
-    print(product)
-
+    freq = getSmallestZeroFreq(output)
+    assert freq == {'1': 15, '2': 130, '0': 5}
+    product = freq['1'] * freq['2']
+    assert product == 1950
