@@ -13,14 +13,17 @@ class IntcodeProgram:
         JUMP_F = 6
         LESS_THAN = 7
         EQUAL = 8
+        RELATIVE = 9
 
     class Modes(Enum):
         POSITION = 0
         IMMEDIATE = 1
+        RELATIVE = 2
 
     def __init__(self, program):
         self.instruction_pointer = 0
         self.program = program.copy()
+        self.relative_base = 0
 
     def get_instruction_set(self, instruction):
         # depending on the instruction we will parse the digits in some fashion
@@ -152,6 +155,11 @@ class IntcodeProgram:
         else:
             input_codes[save_idx] = 0
 
+    def relative(self, input_codes, instruction_set, instruction_pointer):
+        [mode_1] = instruction_set[1:]
+        param_1 = input_codes[instruction_pointer + 1]
+        self.relative_base = param_1
+
     def run(self, input_signal):
         while True:
             instruction = self.program[self.instruction_pointer]
@@ -188,8 +196,11 @@ class IntcodeProgram:
             elif opcode == self.Opcodes.EQUAL.value:
                 self.equal(self.program, instruction_set, self.instruction_pointer)
                 self.instruction_pointer += 4
+            elif opcode == self.Opcodes.RELATIVE.value:
+                self.relative(self.program, instruction_set, self.instruction_pointer)
+                self.instruction_pointer += 2
             else:
-                break
+                return "error"
 
 
 def run_intcode_max_signal(phase_settings, file_input):
@@ -407,7 +418,7 @@ if __name__ == "__main__":
     print(signal)
     assert signal == 65210
 
-    signal = run_intcode_max_signal([0, 1, 2, 3, 4], "input.txt")
+    signal = run_intcode_max_signal([0, 1, 2, 3, 4], "input_old.txt")
     assert signal == 17406
     print(signal)
 
@@ -426,6 +437,6 @@ if __name__ == "__main__":
     assert signal == 18216
     print(signal)
 
-    signal = run_intcode_max_signal_feedback([5, 6, 7, 8, 9], "input.txt")
+    signal = run_intcode_max_signal_feedback([5, 6, 7, 8, 9], "input_old.txt")
     assert  signal == 1047153
     print(signal)
