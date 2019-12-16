@@ -158,7 +158,8 @@ class IntcodeProgram:
     def relative(self, input_codes, instruction_set, instruction_pointer):
         [mode_1] = instruction_set[1:]
         param_1 = input_codes[instruction_pointer + 1]
-        self.relative_base = param_1
+        new_relative = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
+        self.relative_base = new_relative
 
     def run(self, input_signal):
         while True:
