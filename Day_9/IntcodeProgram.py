@@ -85,18 +85,22 @@ class IntcodeProgram:
         input_codes[save_idx] = product_val
 
     def save(self, input_codes, input_signal, instruction_set, instruction_pointer):
-        # value = input("ID of the system to test: ")
         value = input_signal
         [mode_1] = instruction_set[1:]
         param_1 = input_codes[instruction_pointer + 1]
-        save_idx = param_1 if mode_1 == self.Modes.POSITION.value else input_codes[param_1]
-
+        if mode_1 == self.Modes.POSITION.value:
+            save_idx = param_1
+        elif mode_1 == self.Modes.IMMEDIATE.value:
+            save_idx = input_codes[param_1]
         input_codes[save_idx] = int(value)
 
     def output(self, input_codes, instruction_set, instruction_pointer):
         [mode_1] = instruction_set[1:]
         param_1 = input_codes[instruction_pointer + 1]
-        return_val = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
+        if mode_1 == self.Modes.IMMEDIATE.value:
+            return_val = param_1
+        elif mode_1 == self.Modes.POSITION.value:
+            return_val = input_codes[param_1]
         return return_val
 
     def jump_t(self, input_codes, instruction_set, instruction_pointer):
@@ -146,9 +150,20 @@ class IntcodeProgram:
         param_2 = input_codes[instruction_pointer + 2]
         param_3 = input_codes[instruction_pointer + 3]
 
-        value_1 = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
-        value_2 = param_2 if mode_2 == self.Modes.IMMEDIATE.value else input_codes[param_2]
-        save_idx = param_3 if mode_3 == self.Modes.POSITION.value else input_codes[param_3]
+        if mode_1 == self.Modes.IMMEDIATE.value:
+            value_1 = param_1
+        elif mode_1 == self.Modes.POSITION.value:
+            value_1 = input_codes[param_1]
+
+        if mode_2 == self.Modes.IMMEDIATE.value:
+            value_2 = param_2
+        elif mode_2 == self.Modes.POSITION.value:
+            value_2 = input_codes[param_2]
+
+        if mode_3 == self.Modes.POSITION.value:
+            save_idx = param_3
+        elif mode_3 == self.Modes.IMMEDIATE.value:
+            save_idx = input_codes[param_3]
 
         if value_1 == value_2:
             input_codes[save_idx] = 1
@@ -157,6 +172,13 @@ class IntcodeProgram:
 
     def relative(self, input_codes, instruction_set, instruction_pointer):
         [mode_1] = instruction_set[1:]
+
+        # in order to get the correct code
+        # it seems the mode, instruction pointer, and input_code
+        # need to be passed to a function that determines
+        # this may be a bit problematic due to how the param is returned:
+        # see output and input
+
         param_1 = input_codes[instruction_pointer + 1]
         new_relative = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
         self.relative_base = new_relative
