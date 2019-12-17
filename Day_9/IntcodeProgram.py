@@ -159,16 +159,8 @@ class IntcodeProgram:
 
     def relative(self, input_codes, instruction_set, instruction_pointer):
         [mode_1] = instruction_set[1:]
-
-        # in order to get the correct code
-        # it seems the mode, instruction pointer, and input_code
-        # need to be passed to a function that determines
-        # this may be a bit problematic due to how the param is returned:
-        # see output and input
-
         param_1 = input_codes[instruction_pointer + 1]
-        new_relative = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
-        self.relative_base = new_relative
+        self.relative_base = self.read(param_1, mode_1, input_codes)
 
     def run(self, input_signal):
         while True:
