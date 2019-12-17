@@ -23,11 +23,11 @@ class IntcodeProgram:
         IMMEDIATE = 1
         RELATIVE = 2
 
-    def __init__(self, program, amp_mode):
-        self.amp_mode = amp_mode
+    def __init__(self, program):
         self.instruction_pointer = 0
         self.program = program.copy() + [0] * self.EXTRA_MEMORY
         self.relative_base = 0
+        self.output_buffer = []
 
     def get_instruction_set(self, instruction):
         # depending on the instruction we will parse the digits in some fashion
@@ -174,7 +174,7 @@ class IntcodeProgram:
             opcode = instruction_set[0]
 
             if opcode == self.Opcodes.HALT.value:
-                return "terminated"
+                return self.output_buffer
             elif opcode == self.Opcodes.ADD.value:
                 self.add(self.program, instruction_set, self.instruction_pointer)
                 self.instruction_pointer += 4
@@ -189,11 +189,8 @@ class IntcodeProgram:
                 input_signal = input_signal[1:]
             elif opcode == self.Opcodes.READ.value:
                 result = self.output(self.program, instruction_set, self.instruction_pointer)
-                if not self.amp_mode:
-                    print(result)
-                    self.instruction_pointer += 2
-                else:
-                    return result
+                self.output_buffer.append(result)
+                self.instruction_pointer += 2
             elif opcode == self.Opcodes.JUMP_T.value:
                 new_pointer = self.jump_t(self.program, instruction_set, self.instruction_pointer)
                 self.instruction_pointer = new_pointer if new_pointer is not None else self.instruction_pointer + 3
@@ -309,6 +306,16 @@ def run_max_signal_feedback(phase_settings, program):
             max_signal = input_signal
     return max_signal
 
+
+def run_intcode_boost(file_input):
+    with open(file_input) as data:
+        for line in data:
+            # list comprehension to turn all strings in list to ints
+            input_values = [int(str_num) for str_num in line.split(',')]
+            print(input_values)
+
+            sol = IntcodeProgram(input_values)
+            return sol.run([1])
 
 if __name__ == "__main__":
     # program = [3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8]
@@ -469,24 +476,32 @@ if __name__ == "__main__":
     #
     # # ===============================
 
-    # # if debugged then the value at address 1985 would be read
-    # program = [109, 2000, 109, 19, 204, -34]
-    # sol = IntcodeProgram(program)
-    # output = sol.run(None)
-    # assert output == 0
+    # if debugged then the value at address 1985 would be read
+    program = [109, 2000, 109, 19, 204, -34]
+    sol = IntcodeProgram(program)
+    output = sol.run(None)
+    assert output is "error"
 
     program = [109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99]
-    sol = IntcodeProgram(program, False)
+    sol = IntcodeProgram(program)
     output = sol.run(None)
-    print(output)
 
     program = [1102, 34915192, 34915192, 7, 4, 7, 99, 0]
-    sol = IntcodeProgram(program, True)
+    sol = IntcodeProgram(program)
     output = sol.run(None)
-    assert len(str(output)) == 16
+    print(output[0])
+    assert len(str(output[0])) == 16
 
     program = [104, 1125899906842624, 99]
-    sol = IntcodeProgram(program, True)
+    sol = IntcodeProgram(program)
     output = sol.run(None)
-    assert output == program[1]
+    assert output[0] == program[1]
+
+    boost_keycode = run_intcode_boost("input.txt")
+    print(boost_keycode)
+
+
+
+
+
 
