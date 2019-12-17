@@ -313,18 +313,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Day_9/IntcodeProgram.py</url>
-          <line>224</line>
-          <option name="timeStamp" value="147" />
+          <line>187</line>
+          <option name="timeStamp" value="157" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Day_9/IntcodeProgram.py</url>
-          <line>232</line>
-          <option name="timeStamp" value="148" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Day_9/IntcodeProgram.py</url>
-          <line>167</line>
-          <option name="timeStamp" value="150" />
+          <line>186</line>
+          <option name="timeStamp" value="158" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
