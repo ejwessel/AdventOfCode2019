@@ -64,11 +64,12 @@ class IntcodeProgram:
         param_2 = input_codes[instruction_pointer + 2]
         param_3 = input_codes[instruction_pointer + 3]
 
-        value_1 = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
-        value_2 = param_2 if mode_2 == self.Modes.IMMEDIATE.value else input_codes[param_2]
+        value_1 = self.read(param_1, mode_1, input_codes)
+        value_2 = self.read(param_2, mode_2, input_codes)
+
         summed_val = value_1 + value_2
 
-        save_idx = param_3 if mode_3 == self.Modes.POSITION.value else input_codes[param_3]
+        save_idx = self.write(param_3, mode_3, input_codes)
         input_codes[save_idx] = summed_val
 
     def mul(self, input_codes, instruction_set, instruction_pointer):
@@ -77,39 +78,36 @@ class IntcodeProgram:
         param_2 = input_codes[instruction_pointer + 2]
         param_3 = input_codes[instruction_pointer + 3]
 
-        value_1 = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
-        value_2 = param_2 if mode_2 == self.Modes.IMMEDIATE.value else input_codes[param_2]
+        value_1 = self.read(param_1, mode_1, input_codes)
+        value_2 = self.read(param_2, mode_2, input_codes)
+
         product_val = value_1 * value_2
 
-        save_idx = param_3 if mode_3 == self.Modes.POSITION.value else input_codes[param_3]
+        save_idx = self.write(param_3, mode_3, input_codes)
         input_codes[save_idx] = product_val
 
     def save(self, input_codes, input_signal, instruction_set, instruction_pointer):
         value = input_signal
         [mode_1] = instruction_set[1:]
         param_1 = input_codes[instruction_pointer + 1]
-        if mode_1 == self.Modes.POSITION.value:
-            save_idx = param_1
-        elif mode_1 == self.Modes.IMMEDIATE.value:
-            save_idx = input_codes[param_1]
+
+        save_idx = self.write(param_1, mode_1, input_codes)
+
         input_codes[save_idx] = int(value)
 
     def output(self, input_codes, instruction_set, instruction_pointer):
         [mode_1] = instruction_set[1:]
         param_1 = input_codes[instruction_pointer + 1]
-        if mode_1 == self.Modes.IMMEDIATE.value:
-            return_val = param_1
-        elif mode_1 == self.Modes.POSITION.value:
-            return_val = input_codes[param_1]
-        return return_val
+
+        return self.read(param_1, mode_1, input_codes)
 
     def jump_t(self, input_codes, instruction_set, instruction_pointer):
         [mode_1, mode_2] = instruction_set[1:]
         param_1 = input_codes[instruction_pointer + 1]
         param_2 = input_codes[instruction_pointer + 2]
 
-        value_1 = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
-        value_2 = param_2 if mode_2 == self.Modes.IMMEDIATE.value else input_codes[param_2]
+        value_1 = self.read(param_1, mode_1, input_codes)
+        value_2 = self.read(param_2, mode_2, input_codes)
 
         # set the instruction pointer to the value from the second param
         if value_1 != 0:
@@ -121,8 +119,8 @@ class IntcodeProgram:
         param_1 = input_codes[instruction_pointer + 1]
         param_2 = input_codes[instruction_pointer + 2]
 
-        value_1 = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
-        value_2 = param_2 if mode_2 == self.Modes.IMMEDIATE.value else input_codes[param_2]
+        value_1 = self.read(param_1, mode_1, input_codes)
+        value_2 = self.read(param_2, mode_2, input_codes)
 
         # set the instruction pointer to the value from the second param
         if value_1 == 0:
@@ -135,14 +133,14 @@ class IntcodeProgram:
         param_2 = input_codes[instruction_pointer + 2]
         param_3 = input_codes[instruction_pointer + 3]
 
-        value_1 = param_1 if mode_1 == self.Modes.IMMEDIATE.value else input_codes[param_1]
-        value_2 = param_2 if mode_2 == self.Modes.IMMEDIATE.value else input_codes[param_2]
-        save_indx = param_3 if mode_3 == self.Modes.POSITION.value else input_codes[param_3]
+        value_1 = self.read(param_1, mode_1, input_codes)
+        value_2 = self.read(param_2, mode_2, input_codes)
+        save_idx = self.write(param_3, mode_3, input_codes)
 
         if value_1 < value_2:
-            input_codes[save_indx] = 1
+            input_codes[save_idx] = 1
         else:
-            input_codes[save_indx] = 0
+            input_codes[save_idx] = 0
 
     def equal(self, input_codes, instruction_set, instruction_pointer):
         [mode_1, mode_2, mode_3] = instruction_set[1:]
@@ -150,20 +148,9 @@ class IntcodeProgram:
         param_2 = input_codes[instruction_pointer + 2]
         param_3 = input_codes[instruction_pointer + 3]
 
-        if mode_1 == self.Modes.IMMEDIATE.value:
-            value_1 = param_1
-        elif mode_1 == self.Modes.POSITION.value:
-            value_1 = input_codes[param_1]
-
-        if mode_2 == self.Modes.IMMEDIATE.value:
-            value_2 = param_2
-        elif mode_2 == self.Modes.POSITION.value:
-            value_2 = input_codes[param_2]
-
-        if mode_3 == self.Modes.POSITION.value:
-            save_idx = param_3
-        elif mode_3 == self.Modes.IMMEDIATE.value:
-            save_idx = input_codes[param_3]
+        value_1 = self.read(param_1, mode_1, input_codes)
+        value_2 = self.read(param_2, mode_2, input_codes)
+        save_idx = self.write(param_3, mode_3, input_codes)
 
         if value_1 == value_2:
             input_codes[save_idx] = 1
@@ -225,6 +212,17 @@ class IntcodeProgram:
             else:
                 return "error"
 
+    def read(self, param, mode, input_codes):
+        if mode == self.Modes.IMMEDIATE.value:
+            return param
+        elif mode == self.Modes.POSITION.value:
+            return input_codes[param]
+
+    def write(self, param, mode, input_codes):
+        if mode == self.Modes.IMMEDIATE.value:
+            return input_codes[param]
+        elif mode == self.Modes.POSITION.value:
+            return param
 
 def run_intcode_max_signal(phase_settings, file_input):
     '''
