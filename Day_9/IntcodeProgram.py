@@ -3,6 +3,9 @@ from itertools import permutations
 
 
 class IntcodeProgram:
+
+    EXTRA_MEMORY = 100000
+
     class Opcodes(Enum):
         HALT = 99
         ADD = 1
@@ -20,9 +23,10 @@ class IntcodeProgram:
         IMMEDIATE = 1
         RELATIVE = 2
 
-    def __init__(self, program):
+    def __init__(self, program, amp_mode):
+        self.amp_mode = amp_mode
         self.instruction_pointer = 0
-        self.program = program.copy() + [0] * 100000
+        self.program = program.copy() + [0] * self.EXTRA_MEMORY
         self.relative_base = 0
 
     def get_instruction_set(self, instruction):
@@ -185,8 +189,11 @@ class IntcodeProgram:
                 input_signal = input_signal[1:]
             elif opcode == self.Opcodes.READ.value:
                 result = self.output(self.program, instruction_set, self.instruction_pointer)
-                self.instruction_pointer += 2
-                return result
+                if not self.amp_mode:
+                    print(result)
+                    self.instruction_pointer += 2
+                else:
+                    return result
             elif opcode == self.Opcodes.JUMP_T.value:
                 new_pointer = self.jump_t(self.program, instruction_set, self.instruction_pointer)
                 self.instruction_pointer = new_pointer if new_pointer is not None else self.instruction_pointer + 3
@@ -469,17 +476,17 @@ if __name__ == "__main__":
     # assert output == 0
 
     program = [109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99]
-    sol = IntcodeProgram(program)
+    sol = IntcodeProgram(program, False)
     output = sol.run(None)
     print(output)
 
     program = [1102, 34915192, 34915192, 7, 4, 7, 99, 0]
-    sol = IntcodeProgram(program)
+    sol = IntcodeProgram(program, True)
     output = sol.run(None)
     assert len(str(output)) == 16
 
     program = [104, 1125899906842624, 99]
-    sol = IntcodeProgram(program)
+    sol = IntcodeProgram(program, True)
     output = sol.run(None)
     assert output == program[1]
 
