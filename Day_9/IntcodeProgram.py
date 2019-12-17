@@ -60,9 +60,9 @@ class IntcodeProgram:
 
     def add(self, input_codes, instruction_set, instruction_pointer):
         [mode_1, mode_2, mode_3] = instruction_set[1:]
-        param_1 = input_codes[instruction_pointer + 1]
-        param_2 = input_codes[instruction_pointer + 2]
-        param_3 = input_codes[instruction_pointer + 3]
+        param_1 = self.handle_relative_param(mode_1, input_codes, instruction_pointer + 1)
+        param_2 = self.handle_relative_param(mode_2, input_codes, instruction_pointer + 2)
+        param_3 = self.handle_relative_param(mode_3, input_codes, instruction_pointer + 3)
 
         value_1 = self.read(param_1, mode_1, input_codes)
         value_2 = self.read(param_2, mode_2, input_codes)
@@ -74,9 +74,9 @@ class IntcodeProgram:
 
     def mul(self, input_codes, instruction_set, instruction_pointer):
         [mode_1, mode_2, mode_3] = instruction_set[1:]
-        param_1 = input_codes[instruction_pointer + 1]
-        param_2 = input_codes[instruction_pointer + 2]
-        param_3 = input_codes[instruction_pointer + 3]
+        param_1 = self.handle_relative_param(mode_1, input_codes, instruction_pointer + 1)
+        param_2 = self.handle_relative_param(mode_2, input_codes, instruction_pointer + 2)
+        param_3 = self.handle_relative_param(mode_3, input_codes, instruction_pointer + 3)
 
         value_1 = self.read(param_1, mode_1, input_codes)
         value_2 = self.read(param_2, mode_2, input_codes)
@@ -89,7 +89,7 @@ class IntcodeProgram:
     def save(self, input_codes, input_signal, instruction_set, instruction_pointer):
         value = input_signal
         [mode_1] = instruction_set[1:]
-        param_1 = input_codes[instruction_pointer + 1]
+        param_1 = self.handle_relative_param(mode_1, input_codes, instruction_pointer + 1)
 
         save_idx = self.write(param_1, mode_1, input_codes)
 
@@ -97,14 +97,15 @@ class IntcodeProgram:
 
     def output(self, input_codes, instruction_set, instruction_pointer):
         [mode_1] = instruction_set[1:]
-        param_1 = input_codes[instruction_pointer + 1]
+        param_1 = self.handle_relative_param(mode_1, input_codes, instruction_pointer + 1)
 
         return self.read(param_1, mode_1, input_codes)
 
     def jump_t(self, input_codes, instruction_set, instruction_pointer):
         [mode_1, mode_2] = instruction_set[1:]
-        param_1 = input_codes[instruction_pointer + 1]
-        param_2 = input_codes[instruction_pointer + 2]
+
+        param_1 = self.handle_relative_param(mode_1, input_codes, instruction_pointer + 1)
+        param_2 = self.handle_relative_param(mode_2, input_codes, instruction_pointer + 2)
 
         value_1 = self.read(param_1, mode_1, input_codes)
         value_2 = self.read(param_2, mode_2, input_codes)
@@ -116,8 +117,9 @@ class IntcodeProgram:
 
     def jump_f(self, input_codes, instruction_set, instruction_pointer):
         [mode_1, mode_2] = instruction_set[1:]
-        param_1 = input_codes[instruction_pointer + 1]
-        param_2 = input_codes[instruction_pointer + 2]
+
+        param_1 = self.handle_relative_param(mode_1, input_codes, instruction_pointer + 1)
+        param_2 = self.handle_relative_param(mode_2, input_codes, instruction_pointer + 2)
 
         value_1 = self.read(param_1, mode_1, input_codes)
         value_2 = self.read(param_2, mode_2, input_codes)
@@ -129,9 +131,10 @@ class IntcodeProgram:
 
     def less_than(self, input_codes, instruction_set, instruction_pointer):
         [mode_1, mode_2, mode_3] = instruction_set[1:]
-        param_1 = input_codes[instruction_pointer + 1]
-        param_2 = input_codes[instruction_pointer + 2]
-        param_3 = input_codes[instruction_pointer + 3]
+
+        param_1 = self.handle_relative_param(mode_1, input_codes, instruction_pointer + 1)
+        param_2 = self.handle_relative_param(mode_2, input_codes, instruction_pointer + 2)
+        param_3 = self.handle_relative_param(mode_3, input_codes, instruction_pointer + 3)
 
         value_1 = self.read(param_1, mode_1, input_codes)
         value_2 = self.read(param_2, mode_2, input_codes)
@@ -144,9 +147,10 @@ class IntcodeProgram:
 
     def equal(self, input_codes, instruction_set, instruction_pointer):
         [mode_1, mode_2, mode_3] = instruction_set[1:]
-        param_1 = input_codes[instruction_pointer + 1]
-        param_2 = input_codes[instruction_pointer + 2]
-        param_3 = input_codes[instruction_pointer + 3]
+
+        param_1 = self.handle_relative_param(mode_1, input_codes, instruction_pointer + 1)
+        param_2 = self.handle_relative_param(mode_2, input_codes, instruction_pointer + 2)
+        param_3 = self.handle_relative_param(mode_3, input_codes, instruction_pointer + 3)
 
         value_1 = self.read(param_1, mode_1, input_codes)
         value_2 = self.read(param_2, mode_2, input_codes)
@@ -159,7 +163,8 @@ class IntcodeProgram:
 
     def relative(self, input_codes, instruction_set, instruction_pointer):
         [mode_1] = instruction_set[1:]
-        param_1 = input_codes[instruction_pointer + 1]
+        param_1 = self.handle_relative_param(mode_1, input_codes, instruction_pointer)
+
         self.relative_base = self.read(param_1, mode_1, input_codes)
 
     def run(self, input_signal):
@@ -204,16 +209,21 @@ class IntcodeProgram:
             else:
                 return "error"
 
+    def handle_relative_param(self, mode, input_codes, instruction_pointer):
+        if mode == self.Modes.RELATIVE.value:
+            return input_codes[instruction_pointer + self.relative_base]
+        return input_codes[instruction_pointer]
+
     def read(self, param, mode, input_codes):
         if mode == self.Modes.IMMEDIATE.value:
             return param
-        elif mode == self.Modes.POSITION.value:
+        elif mode == self.Modes.POSITION.value or mode == self.Modes.RELATIVE.value:
             return input_codes[param]
 
     def write(self, param, mode, input_codes):
         if mode == self.Modes.IMMEDIATE.value:
             return input_codes[param]
-        elif mode == self.Modes.POSITION.value:
+        elif mode == self.Modes.POSITION.value or mode == self.Modes.RELATIVE.value:
             return param
 
 def run_intcode_max_signal(phase_settings, file_input):
