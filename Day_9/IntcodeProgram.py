@@ -500,8 +500,11 @@ if __name__ == "__main__":
 
     boost_keycode = run_intcode_boost("input.txt")
     print(boost_keycode)
-
-
+    '''
+    The address a relative mode parameter refers to is itself plus the current relative base.
+    When the relative base is 0, relative mode parameters and position mode parameters with the
+    same value refer to the same address.
+    '''
 
 
 
