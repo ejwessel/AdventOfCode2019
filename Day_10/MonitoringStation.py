@@ -17,8 +17,11 @@ class MonitoringStation:
 
     def identify_visibility(self):
         for asteroid in self.asteroids:
-            for run in range(1, self.max_x + 1):
+            for run in range(0, self.max_x + 1):
                 for rise in range(0, self.max_y + 1):
+                    if rise == 0 and run == 0:
+                        continue
+
                     # quadrant 1
                     seen = self.walk(asteroid[0] + run, asteroid[1] + rise, rise, run)
                     self.asteroids[asteroid] += seen
