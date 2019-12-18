@@ -38,6 +38,18 @@
       <recent name="$PROJECT_DIR$/Day_5" />
     </key>
   </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
   <component name="RunManager" selected="Python.MonitoringStation">
     <configuration name="DecodeSpaceImage" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AdventOfCode2019" />
@@ -155,16 +167,6 @@
     </recent_temporary>
   </component>
   <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
     <option name="showServicesTree" value="false" />
   </component>
   <component name="SvnConfiguration">
@@ -319,8 +321,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Day_10/MonitoringStation.py</url>
-          <line>41</line>
-          <option name="timeStamp" value="176" />
+          <line>25</line>
+          <option name="timeStamp" value="178" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Day_10/MonitoringStation.py</url>
+          <line>30</line>
+          <option name="timeStamp" value="179" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

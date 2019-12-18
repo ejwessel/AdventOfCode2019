@@ -9,11 +9,11 @@ class MonitoringStation:
         self.locate_asteroids()
 
     def locate_asteroids(self):
-        for row in range(len(self.grid)):
-            for col in range(len(self.grid)):
-                if self.grid[row][col] is not '#':
+        for y in range(len(self.grid)):
+            for x in range(len(self.grid[0])):
+                if self.grid[y][x] is not '#':
                     continue
-                self.asteroids[(row, col)] = 0
+                self.asteroids[(x, y)] = set()
 
     def identify_visibility(self):
         for asteroid in self.asteroids:
@@ -24,46 +24,108 @@ class MonitoringStation:
 
                     # quadrant 1
                     seen = self.walk(asteroid[0] + run, asteroid[1] + rise, rise, run)
-                    self.asteroids[asteroid] += seen
+                    if seen is not None:
+                        self.asteroids[asteroid].add(seen)
 
                     # quadrant 2
                     seen = self.walk(asteroid[0] - run, asteroid[1] + rise, rise, -run)
-                    self.asteroids[asteroid] += seen
+                    if seen is not None:
+                        self.asteroids[asteroid].add(seen)
 
                     # quadrant 3
                     seen = self.walk(asteroid[0] - run, asteroid[1] - rise, -rise, -run)
-                    self.asteroids[asteroid] += seen
+                    if seen is not None:
+                        self.asteroids[asteroid].add(seen)
 
                     # quadrant 4
                     seen = self.walk(asteroid[0] + run, asteroid[1] - rise, -rise, run)
-                    self.asteroids[asteroid] += seen
+                    if seen is not None:
+                        self.asteroids[asteroid].add(seen)
 
     def walk(self, x, y, rise, run):
         if x > self.max_x or x < 0:
             # handle bounds
-            return 0
+            return None
         elif y > self.max_y or y < 0:
             # handle bounds
-            return 0
-        elif self.grid[x][y] is '#':
-            return 1
+            return None
+        elif self.grid[y][x] is '#':
+            return x, y
         else:
             return self.walk(x + run, y + rise, rise, run)
 
 # Go through all asteroids an identify the one that can see the most
 
-if __name__ == "__main__":
 
+def tests():
     grid = [
-        '.#..#',
-        '.....',
-        '#####',
-        '....#',
-        '...##'
+        '#.',
+        '.#',
     ]
     sol = MonitoringStation(grid)
-    sol.identify_visibility()
     print(sol.asteroids)
+    sol.identify_visibility()
+    [print(key, len(value)) for key, value in sol.asteroids.items()]
+
+    grid = [
+        '.#',
+        '#.',
+    ]
+    sol = MonitoringStation(grid)
+    print(sol.asteroids)
+    sol.identify_visibility()
+    [print(key, len(value)) for key, value in sol.asteroids.items()]
+
+    grid = [
+        '.#',
+        '..',
+    ]
+    sol = MonitoringStation(grid)
+    print(sol.asteroids)
+    sol.identify_visibility()
+    [print(key, len(value)) for key, value in sol.asteroids.items()]
+
+    grid = [
+        '.#',
+        '.#',
+    ]
+    sol = MonitoringStation(grid)
+    print(sol.asteroids)
+    sol.identify_visibility()
+    [print(key, len(value)) for key, value in sol.asteroids.items()]
+
+    grid = [
+        '#.',
+        '#.',
+    ]
+    sol = MonitoringStation(grid)
+    print(sol.asteroids)
+    sol.identify_visibility()
+    [print(key, len(value)) for key, value in sol.asteroids.items()]
 
 
+if __name__ == "__main__":
 
+    # tests()
+
+    grid = [
+        '#.',
+        '#.',
+        '#.',
+    ]
+    sol = MonitoringStation(grid)
+    print(sol.asteroids)
+    sol.identify_visibility()
+    [print(key, len(value)) for key, value in sol.asteroids.items()]
+
+    # grid = [
+    #     '.#..#',
+    #     '.....',
+    #     '#####',
+    #     '....#',
+    #     '...##'
+    # ]
+    # sol = MonitoringStation(grid)
+    # print(sol.asteroids)
+    # sol.identify_visibility()
+    # [print(key, len(value)) for key, value in sol.asteroids.items()]
