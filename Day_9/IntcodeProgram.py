@@ -72,11 +72,8 @@ class IntcodeProgram:
 
         value_1 = self.read(param_1, mode_1, input_codes)
         value_2 = self.read(param_2, mode_2, input_codes)
-
         summed_val = value_1 + value_2
-
-        save_idx = self.write(param_3, mode_3, input_codes)
-        input_codes[save_idx] = summed_val
+        self.write(param_3, mode_3, input_codes, summed_val)
 
     def mul(self, input_codes, instruction_set, instruction_pointer):
         [mode_1, mode_2, mode_3] = instruction_set[1:]
@@ -86,20 +83,13 @@ class IntcodeProgram:
 
         value_1 = self.read(param_1, mode_1, input_codes)
         value_2 = self.read(param_2, mode_2, input_codes)
-
         product_val = value_1 * value_2
-
-        save_idx = self.write(param_3, mode_3, input_codes)
-        input_codes[save_idx] = product_val
+        self.write(param_3, mode_3, input_codes, product_val)
 
     def save(self, input_codes, input_signal, instruction_set, instruction_pointer):
-        value = input_signal
         [mode_1] = instruction_set[1:]
         param_1 = input_codes[instruction_pointer + 1]
-
-        save_idx = self.write(param_1, mode_1, input_codes)
-
-        input_codes[save_idx] = int(value)
+        self.write(param_1, mode_1, input_codes, int(input_signal))
 
     def output(self, input_codes, instruction_set, instruction_pointer):
         [mode_1] = instruction_set[1:]
@@ -140,12 +130,11 @@ class IntcodeProgram:
 
         value_1 = self.read(param_1, mode_1, input_codes)
         value_2 = self.read(param_2, mode_2, input_codes)
-        save_idx = self.write(param_3, mode_3, input_codes)
 
         if value_1 < value_2:
-            input_codes[save_idx] = 1
+            self.write(param_3, mode_3, input_codes, 1)
         else:
-            input_codes[save_idx] = 0
+            self.write(param_3, mode_3, input_codes, 0)
 
     def equal(self, input_codes, instruction_set, instruction_pointer):
         [mode_1, mode_2, mode_3] = instruction_set[1:]
@@ -155,12 +144,11 @@ class IntcodeProgram:
 
         value_1 = self.read(param_1, mode_1, input_codes)
         value_2 = self.read(param_2, mode_2, input_codes)
-        save_idx = self.write(param_3, mode_3, input_codes)
 
         if value_1 == value_2:
-            input_codes[save_idx] = 1
+            self.write(param_3, mode_3, input_codes, 1)
         else:
-            input_codes[save_idx] = 0
+            self.write(param_3, mode_3, input_codes, 0)
 
     def relative(self, input_codes, instruction_set, instruction_pointer):
         [mode_1] = instruction_set[1:]
@@ -217,13 +205,13 @@ class IntcodeProgram:
         elif mode == self.Modes.RELATIVE.value:
             return input_codes[self.relative_base + param]
 
-    def write(self, param, mode, input_codes):
+    def write(self, param, mode, input_codes, value):
         if mode == self.Modes.IMMEDIATE.value:
-            return input_codes[param]
+            input_codes[input_codes[param]] = value
         elif mode == self.Modes.POSITION.value:
-            return param
+            input_codes[param] = value
         elif mode == self.Modes.RELATIVE.value:
-            return self.relative_base + param
+            input_codes[self.relative_base + param] = value
 
 
 def run_intcode_max_signal(phase_settings, file_input):
@@ -499,7 +487,7 @@ if __name__ == "__main__":
     # assert output[0] == program[1]
 
     boost_keycode = run_intcode_boost("input.txt")
-    print(boost_keycode)
+    print(boost_keycode[0])
 
 
 
