@@ -295,15 +295,13 @@ def run_max_signal_feedback(phase_settings, program):
     return max_signal
 
 
-def run_intcode_boost(file_input):
+def run_intcode_boost(file_input, input):
     with open(file_input) as data:
         for line in data:
             # list comprehension to turn all strings in list to ints
             input_values = [int(str_num) for str_num in line.split(',')]
-            print(input_values)
-
             sol = IntcodeProgram(input_values)
-            return sol.run([1])
+            return sol.run([input])
 
 if __name__ == "__main__":
     # program = [3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8]
@@ -486,8 +484,11 @@ if __name__ == "__main__":
     # output = sol.run(None)
     # assert output[0] == program[1]
 
-    boost_keycode = run_intcode_boost("input.txt")
+    boost_keycode = run_intcode_boost("input.txt", 1)
     assert boost_keycode[0] == 2752191671
+
+    boost_keycode = run_intcode_boost("input.txt", 2)
+    assert boost_keycode[0] == 87571
 
 
 
