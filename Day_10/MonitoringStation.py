@@ -1,5 +1,6 @@
 import math
 
+
 class MonitoringStation:
 
     def __init__(self, grid):
@@ -32,20 +33,20 @@ class MonitoringStation:
                     rad_angle = math.atan(slope)
 
                     if run > 0 and rise > 0:
-                        self.asteroids[asteroid_start].add(math.degrees(rad_angle))
+                        self.asteroids[asteroid_start].add(str(math.degrees(rad_angle)))
                     elif run < 0 and rise > 0:
-                        self.asteroids[asteroid_start].add(math.degrees(rad_angle + math.pi))
+                        self.asteroids[asteroid_start].add(str(math.degrees(rad_angle + math.pi)))
                     elif run < 0 and rise < 0:
-                        self.asteroids[asteroid_start].add(math.degrees(rad_angle + 2 * math.pi))
+                        self.asteroids[asteroid_start].add(str(math.degrees(rad_angle + 2 * math.pi)))
                     elif run > 0 and rise < 0:
-                        self.asteroids[asteroid_start].add(math.degrees(rad_angle + 3 * math.pi))
+                        self.asteroids[asteroid_start].add(str(math.degrees(rad_angle + 3 * math.pi)))
                     else:
-                        self.asteroids[asteroid_start].add(math.degrees(rad_angle))
+                        self.asteroids[asteroid_start].add(str(math.degrees(rad_angle)))
                 else:
                     if rise > 0:
-                        self.asteroids[asteroid_start].add(math.degrees(math.pi))
+                        self.asteroids[asteroid_start].add(str(math.degrees(math.pi / 2)))
                     else:
-                        self.asteroids[asteroid_start].add(math.degrees(-math.pi))
+                        self.asteroids[asteroid_start].add(str(math.degrees(-math.pi / 2)))
 
         max_key = None
         for key, value in self.asteroids.items():
@@ -64,10 +65,7 @@ def tests():
     ]
     sol = MonitoringStation(grid)
     best_asteroid = sol.identify_visibility()
-    print(best_asteroid)
-    print(sol.asteroids)
-    [print(key, len(value)) for key, value in sol.asteroids.items()]
-    print()
+    assert best_asteroid == ((0, 0), 1)
 
     grid = [
         '.#',
@@ -75,10 +73,7 @@ def tests():
     ]
     sol = MonitoringStation(grid)
     best_asteroid = sol.identify_visibility()
-    print(best_asteroid)
-    print(sol.asteroids)
-    [print(key, len(value)) for key, value in sol.asteroids.items()]
-    print()
+    assert best_asteroid == ((1, 0), 1)
 
     grid = [
         '.#',
@@ -86,10 +81,7 @@ def tests():
     ]
     sol = MonitoringStation(grid)
     best_asteroid = sol.identify_visibility()
-    print(best_asteroid)
-    print(sol.asteroids)
-    [print(key, len(value)) for key, value in sol.asteroids.items()]
-    print()
+    assert best_asteroid == ((1, 0), 0)
 
     grid = [
         '.#',
@@ -97,10 +89,7 @@ def tests():
     ]
     sol = MonitoringStation(grid)
     best_asteroid = sol.identify_visibility()
-    print(best_asteroid)
-    print(sol.asteroids)
-    [print(key, len(value)) for key, value in sol.asteroids.items()]
-    print()
+    assert best_asteroid == ((1, 0), 1)
 
     grid = [
         '#.',
@@ -108,10 +97,7 @@ def tests():
     ]
     sol = MonitoringStation(grid)
     best_asteroid = sol.identify_visibility()
-    print(best_asteroid)
-    print(sol.asteroids)
-    [print(key, len(value)) for key, value in sol.asteroids.items()]
-    print()
+    assert best_asteroid == ((0, 0), 1)
 
     grid = [
         '#.',
@@ -120,10 +106,7 @@ def tests():
     ]
     sol = MonitoringStation(grid)
     best_asteroid = sol.identify_visibility()
-    print(best_asteroid)
-    print(sol.asteroids)
-    [print(key, len(value)) for key, value in sol.asteroids.items()]
-    print()
+    assert best_asteroid == ((0, 1), 2)
 
     grid = [
         '#.',
@@ -133,10 +116,7 @@ def tests():
     ]
     sol = MonitoringStation(grid)
     best_asteroid = sol.identify_visibility()
-    print(best_asteroid)
-    print(sol.asteroids)
-    [print(key, len(value)) for key, value in sol.asteroids.items()]
-    print()
+    assert best_asteroid == ((0, 1), 2)
 
     grid = [
         '.#..#',
@@ -145,10 +125,7 @@ def tests():
     ]
     sol = MonitoringStation(grid)
     best_asteroid = sol.identify_visibility()
-    print(best_asteroid)
-    print(sol.asteroids)
-    [print(key, len(value)) for key, value in sol.asteroids.items()]
-    print()
+    assert best_asteroid == ((1, 0), 2)
 
     grid = [
         '#.#',
@@ -157,10 +134,7 @@ def tests():
     ]
     sol = MonitoringStation(grid)
     best_asteroid = sol.identify_visibility()
-    print(best_asteroid)
-    print(sol.asteroids)
-    [print(key, len(value)) for key, value in sol.asteroids.items()]
-    print()
+    assert best_asteroid == ((0, 0), 3)
 
     grid = [
         '#.#',
@@ -169,25 +143,19 @@ def tests():
     ]
     sol = MonitoringStation(grid)
     best_asteroid = sol.identify_visibility()
-    print(best_asteroid)
-    print(sol.asteroids)
-    [print(key, len(value)) for key, value in sol.asteroids.items()]
-
-
-if __name__ == "__main__":
-
-    # tests()
+    assert best_asteroid == ((1, 1), 4)
 
     grid = [
         '####',
     ]
     sol = MonitoringStation(grid)
     best_asteroid = sol.identify_visibility()
-    print(best_asteroid)
-    print(sol.asteroids)
-    [print(key, len(value)) for key, value in sol.asteroids.items()]
-    print()
+    assert best_asteroid == ((1, 0), 2)
 
+
+if __name__ == "__main__":
+
+    tests()
 
     grid = [
         '.#..#',
@@ -198,6 +166,52 @@ if __name__ == "__main__":
     ]
     sol = MonitoringStation(grid)
     best_asteroid = sol.identify_visibility()
-    print(sol.asteroids)
-    print(best_asteroid)
-    [print(key, len(value)) for key, value in sol.asteroids.items()]
+    assert best_asteroid == ((3, 4), 8)
+
+    grid = [
+        '......#.#.',
+        '#..#.#....',
+        '..#######.',
+        '.#.#.###..',
+        '.#..#.....',
+        '..#....#.#',
+        '#..#....#.',
+        '.##.#..###',
+        '##...#..#.',
+        '.#....####'
+    ]
+    sol = MonitoringStation(grid)
+    best_asteroid = sol.identify_visibility()
+    assert best_asteroid == ((5, 8), 33)
+
+    grid = [
+        '#.#...#.#.',
+        '.###....#.',
+        '.#....#...',
+        '##.#.#.#.#',
+        '....#.#.#.',
+        '.##..###.#',
+        '..#...##..',
+        '..##....##',
+        '......#...',
+        '.####.###.'
+    ]
+    sol = MonitoringStation(grid)
+    best_asteroid = sol.identify_visibility()
+    assert best_asteroid == ((1, 2), 35)
+
+    grid = [
+        '.#..#..###',
+        '####.###.#',
+        '....###.#.',
+        '..###.##.#',
+        '##.##.#.#.',
+        '....###..#',
+        '..#.#..#.#',
+        '#..#.#.###',
+        '.##...##.#',
+        '.....#.#..'
+    ]
+    sol = MonitoringStation(grid)
+    best_asteroid = sol.identify_visibility()
+    assert best_asteroid == ((6, 3), 41)
