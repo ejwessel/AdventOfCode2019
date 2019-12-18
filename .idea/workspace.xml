@@ -319,16 +319,6 @@
           <line>179</line>
           <option name="timeStamp" value="168" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Day_10/MonitoringStation.py</url>
-          <line>25</line>
-          <option name="timeStamp" value="178" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Day_10/MonitoringStation.py</url>
-          <line>30</line>
-          <option name="timeStamp" value="179" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
