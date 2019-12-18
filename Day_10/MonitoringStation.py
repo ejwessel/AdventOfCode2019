@@ -215,3 +215,38 @@ if __name__ == "__main__":
     sol = MonitoringStation(grid)
     best_asteroid = sol.identify_visibility()
     assert best_asteroid == ((6, 3), 41)
+
+    grid = [
+        '.#..##.###...#######',
+        '##.############..##.',
+        '.#.######.########.#',
+        '.###.#######.####.#.',
+        '#####.##.#.##.###.##',
+        '..#####..#.#########',
+        '####################',
+        '#.####....###.#.#.##',
+        '##.#################',
+        '#####.##.###..####..',
+        '..######..##.#######',
+        '####.##.####...##..#',
+        '.#####..#.######.###',
+        '##...#.##########...',
+        '#.##########.#######',
+        '.####.#.###.###.#.##',
+        '....##.##.###..#####',
+        '.#.#.###########.###',
+        '#.#.#.#####.####.###',
+        '###.##.####.##.#..##'
+    ]
+    sol = MonitoringStation(grid)
+    best_asteroid = sol.identify_visibility()
+    assert best_asteroid == ((11, 13), 210)
+
+    grid = []
+    with open("input.txt") as data:
+        for line in data:
+            grid.append(line.rstrip())
+
+    sol = MonitoringStation(grid)
+    best_asteroid = sol.identify_visibility()
+    assert best_asteroid == ((13, 17), 269)
