@@ -3,8 +3,8 @@ class MonitoringStation:
 
     def __init__(self, grid):
         self.grid = grid
-        self.max_x = len(grid[0])
-        self.max_y = len(grid)
+        self.max_x = len(grid[0]) - 1
+        self.max_y = len(grid) - 1
         self.asteroids = {}
         self.locate_asteroids()
 
@@ -15,17 +15,39 @@ class MonitoringStation:
                     continue
                 self.asteroids[(row, col)] = 0
 
-# go through rows and columns
-# save all asteroid spots in set
-#   (x, y) = 0
-#   set will be used to keep count seen
-# compute the max numerator for slope
-# compute the max denominator for slope
-# Go through all asteroids
-#   compute all possible slopes (+ / -)
-#   starting at asteroid coordinate walk in direction until end of see asteroid
-# Go through all asteroids an identify the one that can see the most
+    def identify_visibility(self):
+        for asteroid in self.asteroids:
+            for run in range(1, self.max_x + 1):
+                for rise in range(0, self.max_y + 1):
+                    # quadrant 1
+                    seen = self.walk(asteroid[0] + run, asteroid[1] + rise, rise, run)
+                    self.asteroids[asteroid] += seen
 
+                    # quadrant 2
+                    seen = self.walk(asteroid[0] - run, asteroid[1] + rise, rise, -run)
+                    self.asteroids[asteroid] += seen
+
+                    # quadrant 3
+                    seen = self.walk(asteroid[0] - run, asteroid[1] - rise, -rise, -run)
+                    self.asteroids[asteroid] += seen
+
+                    # quadrant 4
+                    seen = self.walk(asteroid[0] + run, asteroid[1] - rise, -rise, run)
+                    self.asteroids[asteroid] += seen
+
+    def walk(self, x, y, rise, run):
+        if x > self.max_x or x < 0:
+            # handle bounds
+            return 0
+        elif y > self.max_y or y < 0:
+            # handle bounds
+            return 0
+        elif self.grid[x][y] is '#':
+            return 1
+        else:
+            return self.walk(x + run, y + rise, rise, run)
+
+# Go through all asteroids an identify the one that can see the most
 
 if __name__ == "__main__":
 
@@ -37,5 +59,8 @@ if __name__ == "__main__":
         '...##'
     ]
     sol = MonitoringStation(grid)
+    sol.identify_visibility()
+    print(sol.asteroids)
+
 
 
