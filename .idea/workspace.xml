@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e57c5a47-5a76-4794-bd11-d51071ec91f4" name="Default Changelist" comment="" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <list default="true" id="e57c5a47-5a76-4794-bd11-d51071ec91f4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Day_9/IntcodeProgram.py" beforeDir="false" afterPath="$PROJECT_DIR$/Day_9/IntcodeProgram.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,18 +37,6 @@
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/Day_5" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager" selected="Python.IntcodeProgram">
     <configuration name="DecodeSpaceImage" type="PythonConfigurationType" factoryName="Python" temporary="true">
@@ -165,6 +155,16 @@
     </recent_temporary>
   </component>
   <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
     <option name="showServicesTree" value="false" />
   </component>
   <component name="SvnConfiguration">
@@ -194,42 +194,46 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state width="819" height="219" key="GridCell.Tab.0.bottom" timestamp="1576471809042">
+    <state width="874" height="398" key="GridCell.Tab.0.bottom" timestamp="1576635800452">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="819" height="219" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1576471809042" />
-    <state width="819" height="219" key="GridCell.Tab.0.center" timestamp="1576471809032">
+    <state width="874" height="398" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1576635800452" />
+    <state width="874" height="398" key="GridCell.Tab.0.center" timestamp="1576635800451">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="819" height="219" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1576471809032" />
-    <state width="819" height="219" key="GridCell.Tab.0.left" timestamp="1576471809017">
+    <state width="874" height="398" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1576635800451" />
+    <state width="874" height="398" key="GridCell.Tab.0.left" timestamp="1576635800451">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="819" height="219" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1576471809016" />
-    <state width="819" height="219" key="GridCell.Tab.0.right" timestamp="1576471809037">
+    <state width="874" height="398" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1576635800451" />
+    <state width="874" height="398" key="GridCell.Tab.0.right" timestamp="1576635800451">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="819" height="219" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1576471809037" />
-    <state width="819" height="345" key="GridCell.Tab.1.bottom" timestamp="1576423712745">
+    <state width="874" height="398" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1576635800451" />
+    <state width="874" height="345" key="GridCell.Tab.1.bottom" timestamp="1576635500031">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="819" height="345" key="GridCell.Tab.1.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1576423712745" />
-    <state width="819" height="345" key="GridCell.Tab.1.center" timestamp="1576423712744">
+    <state width="874" height="345" key="GridCell.Tab.1.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1576635500031" />
+    <state width="874" height="345" key="GridCell.Tab.1.center" timestamp="1576635500030">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="819" height="345" key="GridCell.Tab.1.center/0.23.1680.1027@0.23.1680.1027" timestamp="1576423712744" />
-    <state width="819" height="345" key="GridCell.Tab.1.left" timestamp="1576423712744">
+    <state width="874" height="345" key="GridCell.Tab.1.center/0.23.1680.1027@0.23.1680.1027" timestamp="1576635500030" />
+    <state width="874" height="345" key="GridCell.Tab.1.left" timestamp="1576635500030">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="819" height="345" key="GridCell.Tab.1.left/0.23.1680.1027@0.23.1680.1027" timestamp="1576423712744" />
-    <state width="819" height="345" key="GridCell.Tab.1.right" timestamp="1576423712745">
+    <state width="874" height="345" key="GridCell.Tab.1.left/0.23.1680.1027@0.23.1680.1027" timestamp="1576635500030" />
+    <state width="874" height="345" key="GridCell.Tab.1.right" timestamp="1576635500030">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="819" height="345" key="GridCell.Tab.1.right/0.23.1680.1027@0.23.1680.1027" timestamp="1576423712745" />
+    <state width="874" height="345" key="GridCell.Tab.1.right/0.23.1680.1027@0.23.1680.1027" timestamp="1576635500030" />
     <state x="349" y="175" key="SettingsEditor" timestamp="1576423965342">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="349" y="175" key="SettingsEditor/0.23.1680.1027@0.23.1680.1027" timestamp="1576423965342" />
+    <state x="798" y="279" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1576635281399">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="798" y="279" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.23.1680.1027@0.23.1680.1027" timestamp="1576635281399" />
     <state x="748" y="250" width="670" height="58" key="search.everywhere.popup" timestamp="1576386987898">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -310,8 +314,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Day_9/IntcodeProgram.py</url>
-          <line>206</line>
-          <option name="timeStamp" value="162" />
+          <line>191</line>
+          <option name="timeStamp" value="168" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Day_9/IntcodeProgram.py</url>
+          <line>217</line>
+          <option name="timeStamp" value="169" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -4,7 +4,7 @@ from itertools import permutations
 
 class IntcodeProgram:
 
-    EXTRA_MEMORY = 100000
+    EXTRA_MEMORY = 50000000
 
     class Opcodes(Enum):
         HALT = 99
@@ -223,7 +223,7 @@ class IntcodeProgram:
         elif mode == self.Modes.POSITION.value:
             return param
         elif mode == self.Modes.RELATIVE.value:
-            return input_codes[self.relative_base + param]
+            return self.relative_base + param
 
 
 def run_intcode_max_signal(phase_settings, file_input):
@@ -476,35 +476,30 @@ if __name__ == "__main__":
     #
     # # ===============================
 
-    # if debugged then the value at address 1985 would be read
-    program = [109, 2000, 109, 19, 204, -34]
-    sol = IntcodeProgram(program)
-    output = sol.run(None)
-    assert output is "error"
-
-    program = [109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99]
-    sol = IntcodeProgram(program)
-    output = sol.run(None)
-    assert output == [109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99]
-
-    program = [1102, 34915192, 34915192, 7, 4, 7, 99, 0]
-    sol = IntcodeProgram(program)
-    output = sol.run(None)
-    print(output[0])
-    assert len(str(output[0])) == 16
-
-    program = [104, 1125899906842624, 99]
-    sol = IntcodeProgram(program)
-    output = sol.run(None)
-    assert output[0] == program[1]
+    # # if debugged then the value at address 1985 would be read
+    # program = [109, 2000, 109, 19, 204, -34]
+    # sol = IntcodeProgram(program)
+    # output = sol.run(None)
+    # assert output is "error"
+    #
+    # program = [109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99]
+    # sol = IntcodeProgram(program)
+    # output = sol.run(None)
+    # assert output == [109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99]
+    #
+    # program = [1102, 34915192, 34915192, 7, 4, 7, 99, 0]
+    # sol = IntcodeProgram(program)
+    # output = sol.run(None)
+    # print(output[0])
+    # assert len(str(output[0])) == 16
+    #
+    # program = [104, 1125899906842624, 99]
+    # sol = IntcodeProgram(program)
+    # output = sol.run(None)
+    # assert output[0] == program[1]
 
     boost_keycode = run_intcode_boost("input.txt")
     print(boost_keycode)
-    '''
-    The address a relative mode parameter refers to is itself plus the current relative base.
-    When the relative base is 0, relative mode parameters and position mode parameters with the
-    same value refer to the same address.
-    '''
 
 
 
