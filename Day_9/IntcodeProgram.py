@@ -4,7 +4,7 @@ from itertools import permutations
 
 class IntcodeProgram:
 
-    EXTRA_MEMORY = 50000000
+    EXTRA_MEMORY = 5000000
 
     class Opcodes(Enum):
         HALT = 99
@@ -487,7 +487,7 @@ if __name__ == "__main__":
     # assert output[0] == program[1]
 
     boost_keycode = run_intcode_boost("input.txt")
-    print(boost_keycode[0])
+    assert boost_keycode[0] == 2752191671
 
 
 
