@@ -75,6 +75,12 @@ class MonitoringStation:
         y_x_sum = y_product + x_product
         return math.pow(y_x_sum, 0.5)
 
+    def save_distance_from_pivot(self, angle_set, angle, pivot, asteroid):
+        if angle not in angle_set:
+            angle_set[angle] = []
+        distance = self.distance_between(pivot, asteroid)
+        angle_set[angle].append((asteroid, distance))
+
     def vaporize(self, pivot):
         angle_set = {}
 
@@ -94,68 +100,84 @@ class MonitoringStation:
                 if run > 0 and rise > 0:
                     # quadrant 1
                     key = (math.degrees(rad_angle))
-                    if key not in angle_set:
-                        angle_set[key] = []
-                    distance = self.distance_between(pivot, asteroid)
-                    angle_set[key].append((asteroid, distance))
+                    self.save_distance_from_pivot(angle_set, key, pivot, asteroid)
                 elif run < 0 and rise > 0:
                     # quadrant 2
                     key = (math.degrees(rad_angle + math.pi))
-                    if key not in angle_set:
-                        angle_set[key] = []
-                    distance = self.distance_between(pivot, asteroid)
-                    angle_set[key].append((asteroid, distance))
+                    self.save_distance_from_pivot(angle_set, key, pivot, asteroid)
                 elif run < 0 and rise < 0:
                     # quadrant 3
                     key = (math.degrees(rad_angle + 2 * math.pi))
-                    if key not in angle_set:
-                        angle_set[key] = []
-                    distance = self.distance_between(pivot, asteroid)
-                    angle_set[key].append((asteroid, distance))
+                    self.save_distance_from_pivot(angle_set, key, pivot, asteroid)
                 elif run > 0 and rise < 0:
                     # quadrant 4
                     key = (math.degrees(rad_angle + 3 * math.pi))
-                    if key not in angle_set:
-                        angle_set[key] = []
-                    distance = self.distance_between(pivot, asteroid)
-                    angle_set[key].append((asteroid, distance))
+                    self.save_distance_from_pivot(angle_set, key, pivot, asteroid)
                 elif str(rad_angle) == "0.0":
                     # pointing directly to right
                     key = (math.degrees(0.0))
-                    if key not in angle_set:
-                        angle_set[key] = []
-                    distance = self.distance_between(pivot, asteroid)
-                    angle_set[key].append((asteroid, distance))
+                    self.save_distance_from_pivot(angle_set, key, pivot, asteroid)
                 elif str(rad_angle) == "-0.0":
                     # pointing directly to right
                     key = (math.degrees(math.pi))
-                    if key not in angle_set:
-                        angle_set[key] = []
-                    distance = self.distance_between(pivot, asteroid)
-                    angle_set[key].append((asteroid, distance))
+                    self.save_distance_from_pivot(angle_set, key, pivot, asteroid)
             else:
                 if rise > 0:
                     # pointing directly up
                     key = (math.degrees(math.pi / 2))
-                    if key not in angle_set:
-                        angle_set[key] = []
-                    distance = self.distance_between(pivot, asteroid)
-                    angle_set[key].append((asteroid, distance))
+                    self.save_distance_from_pivot(angle_set, key, pivot, asteroid)
                 else:
                     # pointing directly down
                     key = (math.degrees(-math.pi / 2))
-                    if key not in angle_set:
-                        angle_set[key] = []
-                    distance = self.distance_between(pivot, asteroid)
-                    angle_set[key].append((asteroid, distance))
+                    self.save_distance_from_pivot(angle_set, key, pivot, asteroid)
 
+        # sort the internal angle lists by distance
         for key in angle_set:
             new_list = sorted(angle_set[key], key=itemgetter(1))
             angle_set[key] = new_list
 
         angle_list = list(angle_set.items())
         sorted_angle_list = sorted(angle_list, key=itemgetter(0))
-        print(sorted_angle_list)
+        # print(sorted_angle_list)
+
+        key_idx = {}
+        for key in angle_set.keys():
+            key_idx[key] = 0
+        # print(key_idx)
+
+        # identify where to start
+        idx = 0
+        for i in range(len(sorted_angle_list)):
+            if sorted_angle_list[i][0] >= 90.0:
+                idx = i
+                break
+
+        # identify order of output
+        output_list = []
+        while len(sorted_angle_list) > 0:
+            current_pairing = sorted_angle_list[idx]
+            # print(current_pairing)
+
+            key = current_pairing[0]
+            key_list = current_pairing[1]
+
+            current_key_idx = key_idx[key]
+            output_list.append(key_list[current_key_idx][0])
+            # print(key_list[current_key_idx])
+
+            key_idx[key] += 1
+            # if idx key is greater than list at that angle then remove it
+            if key_idx[key] >= len(key_list):
+                sorted_angle_list.remove(current_pairing)
+
+            # if there are no more elements, exit
+            if len(sorted_angle_list) == 0:
+                break
+
+            idx += 1
+            idx %= len(sorted_angle_list)
+
+        return output_list
 
 
 def tests():
@@ -358,7 +380,8 @@ if __name__ == "__main__":
         '#...#',
     ]
     sol = MonitoringStation(grid)
-    sol.vaporize((2, 2))
+    result = sol.vaporize((2, 2))
+    print(result)
 
     result = sol.distance_between((-2, 1), (1, 5))
     assert result == 5.0
@@ -366,4 +389,3 @@ if __name__ == "__main__":
     result = sol.distance_between((-2, -3), (-4, 4))
     result = round(result, 2)
     assert result == 7.28
-
