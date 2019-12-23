@@ -1,5 +1,5 @@
 import math
-
+from operator import itemgetter
 
 class MonitoringStation:
 
@@ -89,61 +89,73 @@ class MonitoringStation:
                 slope = rise / run
                 rad_angle = math.atan(slope)
 
+                # The distance of the coordinate is saved with the coordinate
+
                 if run > 0 and rise > 0:
                     # quadrant 1
                     key = (math.degrees(rad_angle))
                     if key not in angle_set:
                         angle_set[key] = []
-                    angle_set[key].append(asteroid)
+                    distance = self.distance_between(pivot, asteroid)
+                    angle_set[key].append((asteroid, distance))
                 elif run < 0 and rise > 0:
                     # quadrant 2
                     key = (math.degrees(rad_angle + math.pi))
                     if key not in angle_set:
                         angle_set[key] = []
-                    angle_set[key].append(asteroid)
+                    distance = self.distance_between(pivot, asteroid)
+                    angle_set[key].append((asteroid, distance))
                 elif run < 0 and rise < 0:
                     # quadrant 3
                     key = (math.degrees(rad_angle + 2 * math.pi))
                     if key not in angle_set:
                         angle_set[key] = []
-                    angle_set[key].append(asteroid)
+                    distance = self.distance_between(pivot, asteroid)
+                    angle_set[key].append((asteroid, distance))
                 elif run > 0 and rise < 0:
                     # quadrant 4
                     key = (math.degrees(rad_angle + 3 * math.pi))
                     if key not in angle_set:
                         angle_set[key] = []
-                    angle_set[key].append(asteroid)
+                    distance = self.distance_between(pivot, asteroid)
+                    angle_set[key].append((asteroid, distance))
                 elif str(rad_angle) == "0.0":
                     # pointing directly to right
                     key = (math.degrees(0.0))
                     if key not in angle_set:
                         angle_set[key] = []
-                    angle_set[key].append(asteroid)
+                    distance = self.distance_between(pivot, asteroid)
+                    angle_set[key].append((asteroid, distance))
                 elif str(rad_angle) == "-0.0":
                     # pointing directly to right
                     key = (math.degrees(math.pi))
                     if key not in angle_set:
                         angle_set[key] = []
-                    angle_set[key].append(asteroid)
+                    distance = self.distance_between(pivot, asteroid)
+                    angle_set[key].append((asteroid, distance))
             else:
                 if rise > 0:
                     # pointing directly up
                     key = (math.degrees(math.pi / 2))
                     if key not in angle_set:
                         angle_set[key] = []
-                    angle_set[key].append(asteroid)
+                    distance = self.distance_between(pivot, asteroid)
+                    angle_set[key].append((asteroid, distance))
                 else:
                     # pointing directly down
                     key = (math.degrees(-math.pi / 2))
                     if key not in angle_set:
                         angle_set[key] = []
-                    angle_set[key].append(asteroid)
+                    distance = self.distance_between(pivot, asteroid)
+                    angle_set[key].append((asteroid, distance))
 
-        print(angle_set.items())
-        sorted_keys = sorted(angle_set.keys())
-        print(sorted_keys)
+        for key in angle_set:
+            new_list = sorted(angle_set[key], key=itemgetter(1))
+            angle_set[key] = new_list
 
-
+        angle_list = list(angle_set.items())
+        sorted_angle_list = sorted(angle_list, key=itemgetter(0))
+        print(sorted_angle_list)
 
 
 def tests():
