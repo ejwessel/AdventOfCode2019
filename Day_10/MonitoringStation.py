@@ -97,6 +97,16 @@ class MonitoringStation:
         sorted_angle_list = sorted(angle_list, key=itemgetter(0))
         return sorted_angle_list
 
+    def handle_negative_angles(self, angle_set):
+        new_angle_set = {}
+        for key in angle_set.keys():
+            if key < 0.0:
+                new_key = 360 + key
+                new_angle_set[new_key] = angle_set[key]
+            else:
+                new_angle_set[key] = angle_set[key]
+        return new_angle_set
+
     def vaporize(self, pivot):
         angle_set = {}
 
@@ -112,6 +122,7 @@ class MonitoringStation:
                 rad_angle = math.atan(slope)
 
                 # The distance of the coordinate is saved with the coordinate
+                # the radian angle - math.pi / 2 due to directly up being the starting coordinates
 
                 if run > 0 and rise > 0:
                     # quadrant 1
@@ -148,19 +159,9 @@ class MonitoringStation:
                     self.save_distance_from_pivot(angle_set, key, pivot, asteroid)
 
         self.sort_angle_set_by_distance(angle_set)
-
-        new_angle_set = {}
-        for key in angle_set.keys():
-            if key < 0.0:
-                new_key = 360 + key
-                new_angle_set[new_key] = angle_set[key]
-            else:
-                new_angle_set[key] = angle_set[key]
-
-        sorted_angle_list = self.sort_angle_set_keys(new_angle_set)
-
-        key_idx = self.setup_key_idx(new_angle_set)
-
+        angle_set = self.handle_negative_angles(angle_set)
+        sorted_angle_list = self.sort_angle_set_keys(angle_set)
+        key_idx = self.setup_key_idx(angle_set)
 
         rotation = 0
         # identify order of output
