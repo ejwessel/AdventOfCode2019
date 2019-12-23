@@ -145,13 +145,7 @@ class MonitoringStation:
             key_idx[key] = 0
         # print(key_idx)
 
-        # identify where to start
         idx = 0
-        for i in range(len(sorted_angle_list)):
-            if sorted_angle_list[i][0] >= 90.0:
-                idx = i
-                break
-
         # identify order of output
         output_list = []
         while len(sorted_angle_list) > 0:
@@ -389,3 +383,4 @@ if __name__ == "__main__":
     result = sol.distance_between((-2, -3), (-4, 4))
     result = round(result, 2)
     assert result == 7.28
+
