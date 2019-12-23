@@ -34,29 +34,29 @@ class MonitoringStation:
 
                     if run > 0 and rise > 0:
                         # quadrant 1
-                        self.asteroids[asteroid_start].add(str(math.degrees(rad_angle)))
+                        self.asteroids[asteroid_start].add(math.degrees(rad_angle))
                     elif run < 0 and rise > 0:
                         # quadrant 2
-                        self.asteroids[asteroid_start].add(str(math.degrees(rad_angle + math.pi)))
+                        self.asteroids[asteroid_start].add(math.degrees(rad_angle + math.pi))
                     elif run < 0 and rise < 0:
                         # quadrant 3
-                        self.asteroids[asteroid_start].add(str(math.degrees(rad_angle + 2 * math.pi)))
+                        self.asteroids[asteroid_start].add(math.degrees(rad_angle + 2 * math.pi))
                     elif run > 0 and rise < 0:
                         # quadrant 4
-                        self.asteroids[asteroid_start].add(str(math.degrees(rad_angle + 3 * math.pi)))
+                        self.asteroids[asteroid_start].add(math.degrees(rad_angle + 3 * math.pi))
                     elif str(rad_angle) == "0.0":
                         # pointing directly to right
-                        self.asteroids[asteroid_start].add(str(math.degrees(0.0)))
+                        self.asteroids[asteroid_start].add(math.degrees(0.0))
                     elif str(rad_angle) == "-0.0":
                         # pointing directly to left
-                        self.asteroids[asteroid_start].add(str(math.degrees(math.pi)))
+                        self.asteroids[asteroid_start].add(math.degrees(math.pi))
                 else:
                     if rise > 0:
                         # pointing directly up
-                        self.asteroids[asteroid_start].add(str(math.degrees(math.pi / 2)))
+                        self.asteroids[asteroid_start].add(math.degrees(math.pi / 2))
                     else:
                         # pointing directly down
-                        self.asteroids[asteroid_start].add(str(math.degrees(-math.pi / 2)))
+                        self.asteroids[asteroid_start].add(math.degrees(-math.pi / 2))
 
         max_key = None
         for key, value in self.asteroids.items():
@@ -67,9 +67,6 @@ class MonitoringStation:
 
         return max_key, len(self.asteroids[max_key])
 
-    def vaporize(self, start_x, start_y):
-        pass
-
     def distance_between(self, coord_1, coord_2):
         y_delta = (coord_2[1] - coord_1[1])
         y_product = math.pow(y_delta, 2)
@@ -77,6 +74,77 @@ class MonitoringStation:
         x_product = math.pow(x_delta, 2)
         y_x_sum = y_product + x_product
         return math.pow(y_x_sum, 0.5)
+
+    def vaporize(self, pivot):
+        angle_set = {}
+
+        for asteroid in self.asteroids:
+            if pivot == asteroid:
+                continue
+
+            rise = pivot[1] - asteroid[1]
+            run = pivot[0] - asteroid[0]
+
+            if run != 0:
+                slope = rise / run
+                rad_angle = math.atan(slope)
+
+                if run > 0 and rise > 0:
+                    # quadrant 1
+                    key = (math.degrees(rad_angle))
+                    if key not in angle_set:
+                        angle_set[key] = []
+                    angle_set[key].append(asteroid)
+                elif run < 0 and rise > 0:
+                    # quadrant 2
+                    key = (math.degrees(rad_angle + math.pi))
+                    if key not in angle_set:
+                        angle_set[key] = []
+                    angle_set[key].append(asteroid)
+                elif run < 0 and rise < 0:
+                    # quadrant 3
+                    key = (math.degrees(rad_angle + 2 * math.pi))
+                    if key not in angle_set:
+                        angle_set[key] = []
+                    angle_set[key].append(asteroid)
+                elif run > 0 and rise < 0:
+                    # quadrant 4
+                    key = (math.degrees(rad_angle + 3 * math.pi))
+                    if key not in angle_set:
+                        angle_set[key] = []
+                    angle_set[key].append(asteroid)
+                elif str(rad_angle) == "0.0":
+                    # pointing directly to right
+                    key = (math.degrees(0.0))
+                    if key not in angle_set:
+                        angle_set[key] = []
+                    angle_set[key].append(asteroid)
+                elif str(rad_angle) == "-0.0":
+                    # pointing directly to right
+                    key = (math.degrees(math.pi))
+                    if key not in angle_set:
+                        angle_set[key] = []
+                    angle_set[key].append(asteroid)
+            else:
+                if rise > 0:
+                    # pointing directly up
+                    key = (math.degrees(math.pi / 2))
+                    if key not in angle_set:
+                        angle_set[key] = []
+                    angle_set[key].append(asteroid)
+                else:
+                    # pointing directly down
+                    key = (math.degrees(-math.pi / 2))
+                    if key not in angle_set:
+                        angle_set[key] = []
+                    angle_set[key].append(asteroid)
+
+        print(angle_set.items())
+        sorted_keys = sorted(angle_set.keys())
+        print(sorted_keys)
+
+
+
 
 def tests():
     grid = [
@@ -172,11 +240,6 @@ def tests():
     best_asteroid = sol.identify_visibility()
     assert best_asteroid == ((1, 0), 2)
 
-
-if __name__ == "__main__":
-
-    tests()
-
     grid = [
         '.#..#',
         '.....',
@@ -271,9 +334,24 @@ if __name__ == "__main__":
     best_asteroid = sol.identify_visibility()
     assert best_asteroid == ((13, 17), 269)
 
+if __name__ == "__main__":
+
+    tests()
+
+    grid = [
+        '#...#',
+        '.#.#.',
+        '..#..',
+        '.#.#.',
+        '#...#',
+    ]
+    sol = MonitoringStation(grid)
+    sol.vaporize((2, 2))
+
     result = sol.distance_between((-2, 1), (1, 5))
     assert result == 5.0
 
     result = sol.distance_between((-2, -3), (-4, 4))
     result = round(result, 2)
     assert result == 7.28
+
