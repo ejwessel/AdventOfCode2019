@@ -38,18 +38,6 @@
       <recent name="$PROJECT_DIR$/Day_5" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager" selected="Python.MonitoringStation">
     <configuration name="DecodeSpaceImage" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AdventOfCode2019" />
@@ -167,6 +155,16 @@
     </recent_temporary>
   </component>
   <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
     <option name="showServicesTree" value="false" />
   </component>
   <component name="SvnConfiguration">
@@ -196,22 +194,22 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state width="1191" height="345" key="GridCell.Tab.0.bottom" timestamp="1576644922574">
+    <state width="1659" height="225" key="GridCell.Tab.0.bottom" timestamp="1577067015523">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1191" height="345" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1576644922574" />
-    <state width="1191" height="345" key="GridCell.Tab.0.center" timestamp="1576644922574">
+    <state width="1659" height="225" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1577067015523" />
+    <state width="1659" height="225" key="GridCell.Tab.0.center" timestamp="1577067015522">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1191" height="345" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1576644922574" />
-    <state width="1191" height="345" key="GridCell.Tab.0.left" timestamp="1576644922573">
+    <state width="1659" height="225" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1577067015522" />
+    <state width="1659" height="225" key="GridCell.Tab.0.left" timestamp="1577067015522">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1191" height="345" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1576644922573" />
-    <state width="1191" height="345" key="GridCell.Tab.0.right" timestamp="1576644922574">
+    <state width="1659" height="225" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1577067015522" />
+    <state width="1659" height="225" key="GridCell.Tab.0.right" timestamp="1577067015523">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1191" height="345" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1576644922574" />
+    <state width="1659" height="225" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1577067015523" />
     <state width="1191" height="345" key="GridCell.Tab.1.bottom" timestamp="1576644922576">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -318,11 +316,6 @@
           <url>file://$PROJECT_DIR$/Day_9/IntcodeProgram.py</url>
           <line>179</line>
           <option name="timeStamp" value="168" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Day_10/MonitoringStation.py</url>
-          <line>43</line>
-          <option name="timeStamp" value="187" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

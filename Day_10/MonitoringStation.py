@@ -33,19 +33,29 @@ class MonitoringStation:
                     rad_angle = math.atan(slope)
 
                     if run > 0 and rise > 0:
+                        # quadrant 1
                         self.asteroids[asteroid_start].add(str(math.degrees(rad_angle)))
                     elif run < 0 and rise > 0:
+                        # quadrant 2
                         self.asteroids[asteroid_start].add(str(math.degrees(rad_angle + math.pi)))
                     elif run < 0 and rise < 0:
+                        # quadrant 3
                         self.asteroids[asteroid_start].add(str(math.degrees(rad_angle + 2 * math.pi)))
                     elif run > 0 and rise < 0:
+                        # quadrant 4
                         self.asteroids[asteroid_start].add(str(math.degrees(rad_angle + 3 * math.pi)))
-                    else:
-                        self.asteroids[asteroid_start].add(str(math.degrees(rad_angle)))
+                    elif str(rad_angle) == "0.0":
+                        # pointing directly to right
+                        self.asteroids[asteroid_start].add(str(math.degrees(0.0)))
+                    elif str(rad_angle) == "-0.0":
+                        # pointing directly to left
+                        self.asteroids[asteroid_start].add(str(math.degrees(math.pi)))
                 else:
                     if rise > 0:
+                        # pointing directly up
                         self.asteroids[asteroid_start].add(str(math.degrees(math.pi / 2)))
                     else:
+                        # pointing directly down
                         self.asteroids[asteroid_start].add(str(math.degrees(-math.pi / 2)))
 
         max_key = None
