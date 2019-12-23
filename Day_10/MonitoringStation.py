@@ -67,6 +67,16 @@ class MonitoringStation:
 
         return max_key, len(self.asteroids[max_key])
 
+    def vaporize(self, start_x, start_y):
+        pass
+
+    def distance_between(self, coord_1, coord_2):
+        y_delta = (coord_2[1] - coord_1[1])
+        y_product = math.pow(y_delta, 2)
+        x_delta = (coord_2[0] - coord_1[0])
+        x_product = math.pow(x_delta, 2)
+        y_x_sum = y_product + x_product
+        return math.pow(y_x_sum, 0.5)
 
 def tests():
     grid = [
@@ -260,3 +270,10 @@ if __name__ == "__main__":
     sol = MonitoringStation(grid)
     best_asteroid = sol.identify_visibility()
     assert best_asteroid == ((13, 17), 269)
+
+    result = sol.distance_between((-2, 1), (1, 5))
+    assert result == 5.0
+
+    result = sol.distance_between((-2, -3), (-4, 4))
+    result = round(result, 2)
+    assert result == 7.28
