@@ -152,11 +152,11 @@ class MonitoringStation:
         key_idx = self.setup_key_idx(angle_set)
 
 
-        idx = 0
+        rotation = 0
         # identify starting position
         for i in range(len(sorted_angle_list)):
             if sorted_angle_list[i][0] >= 90.0:
-                idx = i
+                rotation = i
                 break
 
         # print(idx)
@@ -164,7 +164,7 @@ class MonitoringStation:
         # identify order of output
         output_list = []
         while len(sorted_angle_list) > 0:
-            current_pairing = sorted_angle_list[idx]
+            current_pairing = sorted_angle_list[rotation]
             # print(current_pairing)
 
             key = current_pairing[0]
@@ -184,12 +184,12 @@ class MonitoringStation:
                     break
 
                 # because the list shrinks we don't move the idx
-                idx %= len(sorted_angle_list)
+                rotation %= len(sorted_angle_list)
                 continue
 
             # i only moves forward if the list doesn't change size
-            idx += 1
-            idx %= len(sorted_angle_list)
+            rotation += 1
+            rotation %= len(sorted_angle_list)
 
         return output_list
 
@@ -452,7 +452,5 @@ if __name__ == "__main__":
 
     sol = MonitoringStation(grid)
     result = sol.vaporize((12, 17))
-    answer = result[200-1]
-    print(answer)
-    print(answer[0] * 100 + answer[1])
+    print(result[200-1])
 
