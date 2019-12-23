@@ -115,52 +115,54 @@ class MonitoringStation:
 
                 if run > 0 and rise > 0:
                     # quadrant 1
-                    key = (math.degrees(rad_angle))
+                    key = (math.degrees(rad_angle - math.pi / 2))
                     self.save_distance_from_pivot(angle_set, key, pivot, asteroid)
                 elif run < 0 and rise > 0:
                     # quadrant 2
-                    key = (math.degrees(rad_angle + math.pi))
+                    key = (math.degrees(rad_angle + math.pi - math.pi / 2))
                     self.save_distance_from_pivot(angle_set, key, pivot, asteroid)
                 elif run < 0 and rise < 0:
                     # quadrant 3
-                    key = (math.degrees(rad_angle + math.pi))
+                    key = (math.degrees(rad_angle + math.pi - math.pi / 2))
                     self.save_distance_from_pivot(angle_set, key, pivot, asteroid)
                 elif run > 0 and rise < 0:
                     # quadrant 4
-                    key = (math.degrees(rad_angle + 2 * math.pi))
+                    key = (math.degrees(rad_angle + 2 * math.pi - math.pi / 2))
                     self.save_distance_from_pivot(angle_set, key, pivot, asteroid)
                 elif str(rad_angle) == "0.0":
                     # pointing directly to right
-                    key = (math.degrees(0.0))
+                    key = (math.degrees(0.0 - math.pi / 2))
                     self.save_distance_from_pivot(angle_set, key, pivot, asteroid)
                 elif str(rad_angle) == "-0.0":
                     # pointing directly to right
-                    key = (math.degrees(math.pi))
+                    key = (math.degrees(math.pi - math.pi / 2))
                     self.save_distance_from_pivot(angle_set, key, pivot, asteroid)
             else:
                 if rise > 0:
                     # pointing directly up
-                    key = (math.degrees(math.pi / 2))
+                    key = (math.degrees(math.pi / 2 - math.pi / 2))
                     self.save_distance_from_pivot(angle_set, key, pivot, asteroid)
                 else:
                     # pointing directly down
-                    key = (math.degrees(math.pi/2 * 3))
+                    key = (math.degrees(math.pi/2 * 3 - math.pi / 2))
                     self.save_distance_from_pivot(angle_set, key, pivot, asteroid)
 
         self.sort_angle_set_by_distance(angle_set)
-        sorted_angle_list = self.sort_angle_set_keys(angle_set)
-        key_idx = self.setup_key_idx(angle_set)
+
+        new_angle_set = {}
+        for key in angle_set.keys():
+            if key < 0.0:
+                new_key = 360 + key
+                new_angle_set[new_key] = angle_set[key]
+            else:
+                new_angle_set[key] = angle_set[key]
+
+        sorted_angle_list = self.sort_angle_set_keys(new_angle_set)
+
+        key_idx = self.setup_key_idx(new_angle_set)
 
 
         rotation = 0
-        # identify starting position
-        for i in range(len(sorted_angle_list)):
-            if sorted_angle_list[i][0] >= 90.0:
-                rotation = i
-                break
-
-        # print(idx)
-
         # identify order of output
         output_list = []
         while len(sorted_angle_list) > 0:
@@ -391,7 +393,7 @@ def tests():
 
 if __name__ == "__main__":
 
-    tests()
+    # tests()
 
     grid = [
         '#...#',
@@ -402,7 +404,30 @@ if __name__ == "__main__":
     ]
     sol = MonitoringStation(grid)
     result = sol.vaporize((2, 2))
-    # print(result)
+    print(result)
+    assert result == [(3, 1), (3, 3), (1, 3), (1, 1), (4, 0), (4, 4), (0, 4), (0, 0)]
+
+    grid = [
+        '###',
+        '###',
+        '###',
+    ]
+    sol = MonitoringStation(grid)
+    result = sol.vaporize((1, 1))
+    print(result)
+    assert result == [(1, 0), (2, 0), (2, 1), (2, 2), (1, 2), (0, 2), (0, 1), (0, 0)]
+
+    grid = [
+        '#..',
+        '..#',
+        '#..',
+    ]
+    sol = MonitoringStation(grid)
+    result = sol.vaporize((2, 1))
+    print(result)
+    assert result == [(0, 2), (0, 0)]
+
+
 
     grid = [
         '.#..##.###...#######',
@@ -445,12 +470,14 @@ if __name__ == "__main__":
     for key in answers.keys():
         assert result[key - 1] == answers[key]
 
+    #  ===========================================
+
     grid = []
     with open("input.txt") as data:
         for line in data:
             grid.append(line.rstrip())
 
     sol = MonitoringStation(grid)
-    result = sol.vaporize((12, 17))
-    print(result[200-1])
-
+    result = sol.vaporize((13, 17))
+    element = result[200 - 1]
+    assert element[0] * 100 + element[1] == 612
