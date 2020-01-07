@@ -1,6 +1,5 @@
 from enum import Enum
-from itertools import permutations
-
+import math
 
 class IntcodeProgram:
 
@@ -213,283 +212,53 @@ class IntcodeProgram:
         elif mode == self.Modes.RELATIVE.value:
             input_codes[self.relative_base + param] = value
 
+class RobotCamera:
 
-def run_intcode_max_signal(phase_settings, file_input):
-    '''
-    To do this, before running the program,
-    replace position 1 with the value 12 and
-    replace position 2 with the value 2.
-    What value is left at position 0 after the program halts?
-    '''
+    def __init__(self, program_input):
+        self.camera = IntcodeProgram(program_input)
+        self.current_coordinate = (0, 0)
+        # TODO: determine how to represent direction
+        self.direction = (0, 1)
+        self.coordinates_seen = {}
 
-    with open(file_input) as data:
-        for line in data:
-            # list comprehension to turn all strings in list to ints
-            input_values = [int(str_num) for str_num in line.split(',')]
+    def get_latest_output(self):
+        return self.camera.output_buffer
 
-            return run_max_signal(phase_settings, input_values)
+    def get_new_direction(self, direction):
+        if direction == 0:
+            # go left
+            pass
+        elif direction == 1:
+            # go right
+            pass
+        else:
+            pass
 
+        return 0
 
-def create_amplifiers(phase_setting, program):
-    amplifiers = []
-    for phase in phase_setting:
-        amp = IntcodeProgram(program)
-        amp.run([phase])
-        amplifiers.append(amp)
-    return amplifiers
+    def capture_photo(self, color):
+        # TODO: determine what to do if this is not the first time visiting this cell
 
+        self.camera.run(color)
+        color = self.camera.output_buffer[0]
+        direction = self.camera.output_buffer[1]
 
-def run_max_signal(phase_settings, program):
-    permuted_phases = permutations(phase_settings)
-    max_signal = 0
+        # mark the color for a cell
+        self.coordinates_seen[self.current_coordinate] = color
 
-    for phases in permuted_phases:
-        amplifiers = create_amplifiers(phases, program)
-        input_signal = 0
-        for amp in amplifiers:
-            input_signal = amp.run([input_signal])
-
-        if input_signal > max_signal:
-            max_signal = input_signal
-
-    return max_signal
-
-
-def run_intcode_max_signal_feedback(phase_settings, file_input):
-    '''
-    To do this, before running the program,
-    replace position 1 with the value 12 and
-    replace position 2 with the value 2.
-    What value is left at position 0 after the program halts?
-    '''
-
-    with open(file_input) as data:
-        for line in data:
-            # list comprehension to turn all strings in list to ints
-            input_values = [int(str_num) for str_num in line.split(',')]
-
-            return run_max_signal_feedback(phase_settings, input_values)
-
-
-def run_through_amplifiers(amplifiers, input_signal):
-    for amp in amplifiers:
-        input_signal = amp.run([input_signal])
-    return input_signal
-
-
-def run_max_signal_feedback(phase_settings, program):
-    permuted_phases = permutations(phase_settings)
-    max_signal = 0
-
-    for phases in permuted_phases:
-        amplifiers = create_amplifiers(phases, program)
-        input_signal = 0
-        while True:
-            new_output = run_through_amplifiers(amplifiers, input_signal)
-            if new_output is "terminated":
-                break
-            input_signal = new_output
-
-        if input_signal > max_signal:
-            max_signal = input_signal
-    return max_signal
-
-
-def run_intcode_boost(file_input, input):
-    with open(file_input) as data:
-        for line in data:
-            # list comprehension to turn all strings in list to ints
-            input_values = [int(str_num) for str_num in line.split(',')]
-            sol = IntcodeProgram(input_values)
-            return sol.run([input])
 
 if __name__ == "__main__":
-    # program = [3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([8])
-    # assert result == 1
-    # sol = IntcodeProgram(program)
-    # result = sol.run([9])
-    # assert result == 0
-    # sol = IntcodeProgram(program)
-    # result = sol.run([7])
-    # assert result == 0
-    #
-    # program = [3, 9, 7, 9, 10, 9, 4, 9, 99, -1, 8]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([7])
-    # assert result == 1
-    # sol = IntcodeProgram(program)
-    # result = sol.run([8])
-    # assert result == 0
-    # sol = IntcodeProgram(program)
-    # result = sol.run([9])
-    # assert result == 0
-    #
-    # program = [3, 3, 1108, -1, 8, 3, 4, 3, 99]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([7])
-    # assert result == 0
-    # sol = IntcodeProgram(program)
-    # result = sol.run([8])
-    # assert result == 1
-    # sol = IntcodeProgram(program)
-    # result = sol.run([9])
-    # assert result == 0
-    #
-    # program = [3, 3, 1107, -1, 8, 3, 4, 3, 99]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([7])
-    # assert result == 1
-    # sol = IntcodeProgram(program)
-    # result = sol.run([8])
-    # assert result == 0
-    # sol = IntcodeProgram(program)
-    # result = sol.run([9])
-    # assert result == 0
-    #
-    # program = [3, 12, 6, 12, 15, 1, 13, 14, 13, 4, 13, 99, -1, 0, 1, 9]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([0])
-    # assert result == 0
-    # sol = IntcodeProgram(program)
-    # result = sol.run([1])
-    # assert result == 1
-    #
-    # program = [3, 3, 1105, -1, 9, 1101, 0, 0, 12, 4, 12, 99, 1]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([0])
-    # assert result == 0
-    # sol = IntcodeProgram(program)
-    # result = sol.run([1])
-    # assert result == 1
-    #
-    # program = [3, 21, 1008, 21, 8, 20, 1005, 20, 22, 107, 8, 21, 20, 1006, 20, 31,
-    #            1106, 0, 36, 98, 0, 0, 1002, 21, 125, 20, 4, 20, 1105, 1, 46, 104,
-    #            999, 1105, 1, 46, 1101, 1000, 1, 20, 4, 20, 1105, 1, 46, 98, 99]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([7])
-    # assert result == 999
-    # sol = IntcodeProgram(program)
-    # result = sol.run([8])
-    # assert result == 1000
-    # sol = IntcodeProgram(program)
-    # result = sol.run([9])
-    # assert result == 1001
-    #
-    # # ===============================
-    #
-    # program = [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([4, 0])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([3, result])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([2, result])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([1, result])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([0, result])
-    # assert result == 43210
-    #
-    # program = [3, 31, 3, 32, 1002, 32, 10, 32, 1001, 31, -2, 31, 1007, 31, 0, 33,
-    #            1002, 33, 7, 33, 1, 33, 31, 31, 1, 32, 31, 31, 4, 31, 99, 0, 0, 0]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([1, 0])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([0, result])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([4, result])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([3, result])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([2, result])
-    # assert result == 65210
-    #
-    # program = [3, 23, 3, 24, 1002, 24, 10, 24, 1002, 23, -1, 23,
-    #            101, 5, 23, 23, 1, 24, 23, 23, 4, 23, 99, 0, 0]
-    # sol = IntcodeProgram(program)
-    # result = sol.run([0, 0])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([1, result])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([2, result])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([3, result])
-    # sol = IntcodeProgram(program)
-    # result = sol.run([4, result])
-    # assert result == 54321
-    #
-    # program = [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0]
-    # signal = run_max_signal([0, 1, 2, 3, 4], program)
-    # print(signal)
-    # assert signal == 43210
-    #
-    # program = [3, 23, 3, 24, 1002, 24, 10, 24, 1002, 23, -1, 23,
-    #            101, 5, 23, 23, 1, 24, 23, 23, 4, 23, 99, 0, 0]
-    # signal = run_max_signal([0, 1, 2, 3, 4], program)
-    # print(signal)
-    # assert signal == 54321
-    #
-    # program = [3, 31, 3, 32, 1002, 32, 10, 32, 1001, 31, -2, 31, 1007, 31, 0, 33,
-    #            1002, 33, 7, 33, 1, 33, 31, 31, 1, 32, 31, 31, 4, 31, 99, 0, 0, 0]
-    # signal = run_max_signal([0, 1, 2, 3, 4], program)
-    # print(signal)
-    # assert signal == 65210
-    #
-    # signal = run_intcode_max_signal([0, 1, 2, 3, 4], "input_old.txt")
-    # assert signal == 17406
-    # print(signal)
-    #
-    # # ===============================
-    #
-    # program = [3, 26, 1001, 26, -4, 26, 3, 27, 1002, 27, 2, 27, 1, 27, 26,
-    #            27, 4, 27, 1001, 28, -1, 28, 1005, 28, 6, 99, 0, 0, 5]
-    # signal = run_max_signal_feedback([5, 6, 7, 8, 9], program)
-    # assert signal == 139629729
-    # print(signal)
-    #
-    # program = [3, 52, 1001, 52, -5, 52, 3, 53, 1, 52, 56, 54, 1007, 54, 5, 55, 1005, 55, 26, 1001, 54,
-    #            -5, 54, 1105, 1, 12, 1, 53, 54, 53, 1008, 54, 0, 55, 1001, 55, 1, 55, 2, 53, 55, 53, 4,
-    #            53, 1001, 56, -1, 56, 1005, 56, 6, 99, 0, 0, 0, 0, 10]
-    # signal = run_max_signal_feedback([5, 6, 7, 8, 9], program)
-    # assert signal == 18216
-    # print(signal)
-    #
-    # signal = run_intcode_max_signal_feedback([5, 6, 7, 8, 9], "input_old.txt")
-    # assert signal == 1047153
-    # print(signal)
-    #
-    # # ===============================
+    with open("input.txt") as data:
+        for line in data:
+            # list comprehension to turn all strings in list to ints
+            input_values = [int(str_num) for str_num in line.split(',')]
 
-    # # if debugged then the value at address 1985 would be read
-    # program = [109, 2000, 109, 19, 204, -34]
-    # sol = IntcodeProgram(program)
-    # output = sol.run(None)
-    # assert output is "error"
-    #
-    # program = [109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99]
-    # sol = IntcodeProgram(program)
-    # output = sol.run(None)
-    # assert output == [109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99]
-    #
-    # program = [1102, 34915192, 34915192, 7, 4, 7, 99, 0]
-    # sol = IntcodeProgram(program)
-    # output = sol.run(None)
-    # print(output[0])
-    # assert len(str(output[0])) == 16
-    #
-    # program = [104, 1125899906842624, 99]
-    # sol = IntcodeProgram(program)
-    # output = sol.run(None)
-    # assert output[0] == program[1]
+            robot = RobotCamera(input_values)
+            robot.capture_photo([0])
 
-    boost_keycode = run_intcode_boost("input.txt", 1)
-    assert boost_keycode[0] == 2752191671
-
-    boost_keycode = run_intcode_boost("input.txt", 2)
-    assert boost_keycode[0] == 87571
-
+    result = (3 * math.pi) % (2 * math.pi)
+    print(result)
+    print(math.pi)
 
 
 
