@@ -218,21 +218,26 @@ class RobotCamera:
         self.camera = IntcodeProgram(program_input)
         self.current_coordinate = (0, 0)
         # TODO: determine how to represent direction
-        self.direction = (0, 1)
+        self.direction = (math.pi / 2)
         self.coordinates_seen = {}
 
     def get_latest_output(self):
         return self.camera.output_buffer
 
-    def get_new_direction(self, direction):
+    def update_direction(self, direction):
         if direction == 0:
             # go left
-            pass
+            self.direction = self.direction + (math.pi / 2)
+            if self.direction >= (2 * math.pi):
+                self.direction %= (2 * math.pi)
+
         elif direction == 1:
             # go right
-            pass
+            self.direction = self.direction - (math.pi / 2)
+            if direction < 0:
+                self.direction += (2 * math.pi)
         else:
-            pass
+            print("direction error")
 
         return 0
 
@@ -245,6 +250,9 @@ class RobotCamera:
 
         # mark the color for a cell
         self.coordinates_seen[self.current_coordinate] = color
+
+        self.update_direction(direction)
+
 
 
 if __name__ == "__main__":

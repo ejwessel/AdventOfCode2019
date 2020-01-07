@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e57c5a47-5a76-4794-bd11-d51071ec91f4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/AdventOfCode2019.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AdventOfCode2019.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Day_11/IntcodeProgram.py" beforeDir="false" afterPath="$PROJECT_DIR$/Day_11/IntcodeProgram.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/bin/activate" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/activate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/bin/python" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/python" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/bin/python3" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/python3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/bin/python3.7" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/python3.7" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.7/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/_backport/tarfile.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/lib/python3.7/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/_backport/tarfile.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.7/site-packages/setuptools-40.8.0-py3.7.egg" beforeDir="false" afterPath="$PROJECT_DIR$/venv/lib/python3.7/site-packages/setuptools-40.8.0-py3.7.egg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/pyvenv.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/venv/pyvenv.cfg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,26 +198,26 @@
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="678" y="301" key="FileChooserDialogImpl/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578430802342" />
-    <state width="1120" height="186" key="GridCell.Tab.0.bottom" timestamp="1578435222634">
+    <state width="1120" height="186" key="GridCell.Tab.0.bottom" timestamp="1578435696326">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="913" height="457" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1577149899714" />
-    <state width="1120" height="186" key="GridCell.Tab.0.bottom/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578435222634" />
-    <state width="1120" height="186" key="GridCell.Tab.0.center" timestamp="1578435222634">
+    <state width="1120" height="186" key="GridCell.Tab.0.bottom/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578435696326" />
+    <state width="1120" height="186" key="GridCell.Tab.0.center" timestamp="1578435696325">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="913" height="457" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1577149899713" />
-    <state width="1120" height="186" key="GridCell.Tab.0.center/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578435222634" />
-    <state width="1120" height="186" key="GridCell.Tab.0.left" timestamp="1578435222633">
+    <state width="1120" height="186" key="GridCell.Tab.0.center/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578435696325" />
+    <state width="1120" height="186" key="GridCell.Tab.0.left" timestamp="1578435696324">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="913" height="457" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1577149899713" />
-    <state width="1120" height="186" key="GridCell.Tab.0.left/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578435222633" />
-    <state width="1120" height="186" key="GridCell.Tab.0.right" timestamp="1578435222634">
+    <state width="1120" height="186" key="GridCell.Tab.0.left/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578435696324" />
+    <state width="1120" height="186" key="GridCell.Tab.0.right" timestamp="1578435696326">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="913" height="457" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1577149899713" />
-    <state width="1120" height="186" key="GridCell.Tab.0.right/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578435222634" />
+    <state width="1120" height="186" key="GridCell.Tab.0.right/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578435696326" />
     <state width="1503" height="259" key="GridCell.Tab.1.bottom" timestamp="1578433577564">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
