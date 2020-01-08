@@ -265,14 +265,14 @@ class RobotCamera:
                 break
 
             new_color = self.camera.output_buffer[0]
-            direction = self.camera.output_buffer[1]
+            new_direction = self.camera.output_buffer[1]
 
             # clear output buffer
             self.camera.output_buffer = []
 
             # mark the color for a cell
             self.coordinates_seen[self.current_coordinate] = new_color
-            self.update_direction(direction)
+            self.update_direction(new_direction)
             self.move_to_cell()
 
 
@@ -286,6 +286,4 @@ if __name__ == "__main__":
             robot.paint()
             print(robot.coordinates_seen)
             print(len(robot.coordinates_seen))
-
-
 
