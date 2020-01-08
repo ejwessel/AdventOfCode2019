@@ -220,9 +220,6 @@ class RobotCamera:
         self.direction = (math.pi / 2)  # always start facing up
         self.coordinates_seen = {}
 
-    def get_latest_output(self):
-        return self.camera.output_buffer
-
     def update_direction(self, direction):
         # go left
         if direction == 0:
@@ -252,30 +249,31 @@ class RobotCamera:
         elif self.direction == 3 * (math.pi / 2):
             self.current_coordinate = (self.current_coordinate[0], self.current_coordinate[1] - 1)
 
-    def capture_photo(self):
-        # if not the first time at this cell then retrieve the last color it was painted
-        if self.current_coordinate in self.coordinates_seen:
-            current_color = self.coordinates_seen[self.current_coordinate]
-        else:
-            # all colors start black
-            current_color = 0
+    def paint(self):
+        # program runs until termination on an internal condition
+        while True:
+            # if not the first time at this cell then retrieve the last color it was painted
+            if self.current_coordinate in self.coordinates_seen:
+                current_color = self.coordinates_seen[self.current_coordinate]
+            else:
+                # all colors start black
+                current_color = 0
 
-        # retrieve output data
-        self.camera.run([current_color])
-        new_color = self.camera.output_buffer[0]
-        direction = self.camera.output_buffer[1]
+            # retrieve output data
+            self.camera.run([current_color])
+            if len(self.camera.output_buffer) == 0:
+                break
 
-        # clear output buffer
-        self.camera.output_buffer = []
+            new_color = self.camera.output_buffer[0]
+            direction = self.camera.output_buffer[1]
 
-        # mark the color for a cell
-        self.coordinates_seen[self.current_coordinate] = new_color
-        self.update_direction(direction)
-        self.move_to_cell()
+            # clear output buffer
+            self.camera.output_buffer = []
 
-        return None
-
-
+            # mark the color for a cell
+            self.coordinates_seen[self.current_coordinate] = new_color
+            self.update_direction(direction)
+            self.move_to_cell()
 
 
 if __name__ == "__main__":
@@ -285,7 +283,9 @@ if __name__ == "__main__":
             input_values = [int(str_num) for str_num in line.split(',')]
 
             robot = RobotCamera(input_values)
-            robot.capture_photo()
+            robot.paint()
+            print(robot.coordinates_seen)
+            print(len(robot.coordinates_seen))
 
 
 
