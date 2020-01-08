@@ -230,7 +230,7 @@ class RobotCamera:
         # go right
         elif direction == 1:
             self.direction = self.direction - (math.pi / 2)
-            if direction < 0:
+            while self.direction < 0.0:
                 self.direction += (2 * math.pi)
         else:
             print("direction error")
@@ -284,6 +284,5 @@ if __name__ == "__main__":
 
             robot = RobotCamera(input_values)
             robot.paint()
-            print(robot.coordinates_seen)
-            print(len(robot.coordinates_seen))
+            assert len(robot.coordinates_seen) == 1934
 
