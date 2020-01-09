@@ -322,6 +322,7 @@ def print_area(area):
 
 def generate_painted_output(coordinate_colorings):
     (max_x, max_y) = get_max_region(coordinate_colorings)
+    # add 1 because these are just maxes of coordinates, we need to ensure we accommodate for idx out of bounds
     area = [[' ' for i in range(max_x + 1)] for j in range(max_y + 1)]
 
     for coord, color in coordinate_colorings.items():
@@ -330,8 +331,18 @@ def generate_painted_output(coordinate_colorings):
         if color == 0:
             continue
         area[y][x] = "#"
-
     return area
+
+
+def flip_image(area):
+    # only look at half of y
+    for y in range(int(len(area) / 2)):
+        for x in range(len(area[0])):
+            temp = area[y][x]
+            # -1 to prevent index out of bounds
+            area[y][x] = area[len(area) - 1 - y][x]
+            area[len(area) - 1 - y][x] = temp
+
 
 
 if __name__ == "__main__":
@@ -348,6 +359,8 @@ if __name__ == "__main__":
             robot.paint()
             normalized_colorings = normalize_coordinate_colorings(robot.coordinates_seen)
             area = generate_painted_output(normalized_colorings)
+            # print_area(area)
+            flip_image(area)
             print_area(area)
 
 
