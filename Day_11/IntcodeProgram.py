@@ -212,13 +212,15 @@ class IntcodeProgram:
         elif mode == self.Modes.RELATIVE.value:
             input_codes[self.relative_base + param] = value
 
+
 class RobotCamera:
 
-    def __init__(self, program_input):
+    def __init__(self, program_input, starting_color):
         self.camera = IntcodeProgram(program_input)
         self.current_coordinate = (0, 0)
         self.direction = (math.pi / 2)  # always start facing up
         self.coordinates_seen = {}
+        self.starting_color = starting_color
 
     def update_direction(self, direction):
         # go left
@@ -253,7 +255,9 @@ class RobotCamera:
         # program runs until termination on an internal condition
         while True:
             # if not the first time at this cell then retrieve the last color it was painted
-            if self.current_coordinate in self.coordinates_seen:
+            if len(self.coordinates_seen) == 0:
+                current_color = self.starting_color
+            elif self.current_coordinate in self.coordinates_seen:
                 current_color = self.coordinates_seen[self.current_coordinate]
             else:
                 # all colors start black
@@ -275,6 +279,7 @@ class RobotCamera:
             self.update_direction(new_direction)
             self.move_to_cell()
 
+
 def normalize_coordinate_colorings(coordinates):
     min_x = None
     min_y = None
@@ -295,6 +300,7 @@ def normalize_coordinate_colorings(coordinates):
 
     return normalized
 
+
 def get_max_region(coordinates):
     max_x = None
     max_y = None
@@ -311,7 +317,8 @@ def get_max_region(coordinates):
 
 def print_area(area):
     for row in area:
-        print(row)
+        print(' '.join(row))
+
 
 def generate_painted_output(coordinate_colorings):
     (max_x, max_y) = get_max_region(coordinate_colorings)
@@ -322,7 +329,6 @@ def generate_painted_output(coordinate_colorings):
         x = coord[0]
         if color == 0:
             continue
-        print(x, y)
         area[y][x] = "#"
 
     return area
@@ -334,10 +340,12 @@ if __name__ == "__main__":
             # list comprehension to turn all strings in list to ints
             input_values = [int(str_num) for str_num in line.split(',')]
 
-            robot = RobotCamera(input_values)
+            robot = RobotCamera(input_values, 0)
             robot.paint()
             assert len(robot.coordinates_seen) == 1934
 
+            robot = RobotCamera(input_values, 1)
+            robot.paint()
             normalized_colorings = normalize_coordinate_colorings(robot.coordinates_seen)
             area = generate_painted_output(normalized_colorings)
             print_area(area)
