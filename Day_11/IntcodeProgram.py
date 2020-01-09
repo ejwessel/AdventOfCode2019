@@ -275,6 +275,58 @@ class RobotCamera:
             self.update_direction(new_direction)
             self.move_to_cell()
 
+def normalize_coordinate_colorings(coordinates):
+    min_x = None
+    min_y = None
+    for coordinate in coordinates.keys():
+        if min_x is None and min_y is None:
+            min_x = coordinate[0]
+            min_y = coordinate[1]
+        else:
+            min_x = min(min_x, coordinate[0])
+            min_y = min(min_y, coordinate[1])
+
+    delta_x = abs(min_x)
+    delta_y = abs(min_y)
+    normalized = {}
+    for coord, color in coordinates.items():
+        new_coord = (coord[0] + delta_x, coord[1] + delta_y)
+        normalized[new_coord] = color
+
+    return normalized
+
+def get_max_region(coordinates):
+    max_x = None
+    max_y = None
+    for coord in coordinates.keys():
+        if max_x is None and max_y is None:
+            max_x = coord[0]
+            max_y = coord[1]
+        else:
+            max_x = max(max_x, coord[0])
+            max_y = max(max_y, coord[1])
+
+    return (max_x, max_y)
+
+
+def print_area(area):
+    for row in area:
+        print(row)
+
+def generate_painted_output(coordinate_colorings):
+    (max_x, max_y) = get_max_region(coordinate_colorings)
+    area = [[' ' for i in range(max_x + 1)] for j in range(max_y + 1)]
+
+    for coord, color in coordinate_colorings.items():
+        y = coord[1]
+        x = coord[0]
+        if color == 0:
+            continue
+        print(x, y)
+        area[y][x] = "#"
+
+    return area
+
 
 if __name__ == "__main__":
     with open("input.txt") as data:
@@ -285,4 +337,14 @@ if __name__ == "__main__":
             robot = RobotCamera(input_values)
             robot.paint()
             assert len(robot.coordinates_seen) == 1934
+
+            normalized_colorings = normalize_coordinate_colorings(robot.coordinates_seen)
+            area = generate_painted_output(normalized_colorings)
+            print_area(area)
+
+
+
+
+
+
 
