@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e57c5a47-5a76-4794-bd11-d51071ec91f4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Day_11/IntcodeProgram.py" beforeDir="false" afterPath="$PROJECT_DIR$/Day_11/IntcodeProgram.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,19 +26,21 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Day_12" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Day_12" />
       <recent name="$PROJECT_DIR$/Day_11" />
       <recent name="$PROJECT_DIR$/Day_9" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/Day_5" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.IntcodeProgram (1)">
+  <component name="RunManager" selected="Python.NBodyProblem">
     <configuration name="DecodeSpaceImage" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AdventOfCode2019" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -73,27 +75,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Day_11/IntcodeProgram.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="IntcodeProgram (2)" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="AdventOfCode2019" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Day_7" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Day_7/IntcodeProgram.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -144,13 +125,34 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="NBodyProblem" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="AdventOfCode2019" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Day_12" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Day_12/NBodyProblem.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.NBodyProblem" />
         <item itemvalue="Python.IntcodeProgram (1)" />
         <item itemvalue="Python.DecodeSpaceImage" />
         <item itemvalue="Python.MonitoringStation" />
         <item itemvalue="Python.IntcodeProgram" />
-        <item itemvalue="Python.IntcodeProgram (2)" />
       </list>
     </recent_temporary>
   </component>
@@ -194,68 +196,26 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="678" y="301" key="FileChooserDialogImpl" timestamp="1578430802342">
+    <state width="939" height="460" key="GridCell.Tab.0.bottom" timestamp="1588459878876">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="678" y="301" key="FileChooserDialogImpl/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578430802342" />
-    <state width="930" height="319" key="GridCell.Tab.0.bottom" timestamp="1578546732888">
-      <screen x="0" y="23" width="1680" height="1027" />
-    </state>
-    <state width="930" height="319" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1578546732888" />
-    <state width="1120" height="167" key="GridCell.Tab.0.bottom/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578519905918" />
-    <state width="930" height="319" key="GridCell.Tab.0.center" timestamp="1578546732880">
-      <screen x="0" y="23" width="1680" height="1027" />
-    </state>
-    <state width="930" height="319" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1578546732880" />
-    <state width="1120" height="167" key="GridCell.Tab.0.center/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578519905917" />
-    <state width="930" height="319" key="GridCell.Tab.0.left" timestamp="1578546732879">
-      <screen x="0" y="23" width="1680" height="1027" />
-    </state>
-    <state width="930" height="319" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1578546732879" />
-    <state width="1120" height="167" key="GridCell.Tab.0.left/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578519905916" />
-    <state width="930" height="319" key="GridCell.Tab.0.right" timestamp="1578546732887">
-      <screen x="0" y="23" width="1680" height="1027" />
-    </state>
-    <state width="930" height="319" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1578546732887" />
-    <state width="1120" height="167" key="GridCell.Tab.0.right/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578519905917" />
-    <state width="968" height="322" key="GridCell.Tab.1.bottom" timestamp="1578544479301">
-      <screen x="0" y="23" width="1680" height="1027" />
-    </state>
-    <state width="968" height="322" key="GridCell.Tab.1.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1578544479301" />
-    <state width="1120" height="627" key="GridCell.Tab.1.bottom/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578519867666" />
-    <state width="968" height="322" key="GridCell.Tab.1.center" timestamp="1578544479297">
-      <screen x="0" y="23" width="1680" height="1027" />
-    </state>
-    <state width="968" height="322" key="GridCell.Tab.1.center/0.23.1680.1027@0.23.1680.1027" timestamp="1578544479297" />
-    <state width="1120" height="627" key="GridCell.Tab.1.center/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578519867666" />
-    <state width="968" height="322" key="GridCell.Tab.1.left" timestamp="1578544479296">
-      <screen x="0" y="23" width="1680" height="1027" />
-    </state>
-    <state width="968" height="322" key="GridCell.Tab.1.left/0.23.1680.1027@0.23.1680.1027" timestamp="1578544479296" />
-    <state width="1120" height="627" key="GridCell.Tab.1.left/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578519867665" />
-    <state width="968" height="322" key="GridCell.Tab.1.right" timestamp="1578544479298">
-      <screen x="0" y="23" width="1680" height="1027" />
-    </state>
-    <state width="968" height="322" key="GridCell.Tab.1.right/0.23.1680.1027@0.23.1680.1027" timestamp="1578544479298" />
-    <state width="1120" height="627" key="GridCell.Tab.1.right/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578519867666" />
-    <state x="399" y="179" key="SettingsEditor" timestamp="1578430948764">
+    <state width="939" height="460" key="GridCell.Tab.0.bottom/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1588459878876" />
+    <state width="939" height="460" key="GridCell.Tab.0.center" timestamp="1588459878875">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="349" y="175" key="SettingsEditor/0.23.1680.1027@0.23.1680.1027" timestamp="1576423965342" />
-    <state x="399" y="179" key="SettingsEditor/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578430948764" />
-    <state width="840" height="513" key="XDebugger.FullValuePopup" timestamp="1578544124535">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state width="939" height="460" key="GridCell.Tab.0.center/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1588459878875" />
+    <state width="939" height="460" key="GridCell.Tab.0.left" timestamp="1588459878875">
+      <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="840" height="513" key="XDebugger.FullValuePopup/0.23.1680.1027@0.23.1680.1027" timestamp="1578544124535" />
-    <state x="798" y="279" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1576635281399">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state width="939" height="460" key="GridCell.Tab.0.left/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1588459878875" />
+    <state width="939" height="460" key="GridCell.Tab.0.right" timestamp="1588459878876">
+      <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="798" y="279" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.23.1680.1027@0.23.1680.1027" timestamp="1576635281399" />
-    <state x="748" y="250" width="670" height="158" key="search.everywhere.popup" timestamp="1578542951591">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state width="939" height="460" key="GridCell.Tab.0.right/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1588459878876" />
+    <state x="1105" y="258" width="670" height="676" key="search.everywhere.popup" timestamp="1588457042494">
+      <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="748" y="250" width="670" height="158" key="search.everywhere.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1578542951591" />
-    <state x="855" y="257" width="766" height="158" key="search.everywhere.popup/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1578518032184" />
+    <state x="1105" y="258" width="670" height="676" key="search.everywhere.popup/0.23.1920.1057/1920.23.1680.1027@0.23.1920.1057" timestamp="1588457042494" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
