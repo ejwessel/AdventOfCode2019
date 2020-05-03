@@ -9,7 +9,7 @@ class NBodyProblem:
                 # this line extracts the x, y, z values into a list
                 coordiantes = [int(comp.strip()[2:]) for comp in line.split(",")]
                 self.planet_dict[tuple(coordiantes)] = [0, 0, 0]
-        self.printState(self.planet_dict)
+        # self.printState(self.planet_dict)
 
     def printState(self, plant_state):
         # print starting info
@@ -46,7 +46,7 @@ class NBodyProblem:
 
             # update state
             self.planet_dict = new_planet_dict
-            self.printState(self.planet_dict)
+            # self.printState(self.planet_dict)
             current_step += 1
 
     def _compute_velocity_vals(self, start_coord, other_coord):
@@ -78,6 +78,10 @@ class NBodyProblem:
         for coord, velocity in self.planet_dict.items():
             total += self._computeEnergy(coord, velocity)
         return total
+
+    def stepsToInitialState(self):
+        pass
+
 
 
 if __name__ == '__main__':
@@ -114,4 +118,14 @@ if __name__ == '__main__':
     sol = NBodyProblem('input.txt')
     sol.runSimulation(1000)
     total_energy = sol.computeTotalEnergy()
-    print(total_energy)
+    assert total_energy == 12466
+    # print(total_energy)
+
+    print("Part 2")
+
+    sol = NBodyProblem('test_input_1.txt')
+    sol.stepsToInitialState()
+    sol.runSimulation(2772)
+    sol.printState(sol.planet_dict)
+
+
