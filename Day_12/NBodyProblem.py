@@ -79,9 +79,47 @@ class NBodyProblem:
             total += self._computeEnergy(coord, velocity)
         return total
 
-    def stepsToInitialState(self):
-        pass
+    def _compute_velocity_val(self, start_coord, other_coord):
+        if start_coord > other_coord:
+            return -1
+        elif start_coord < other_coord:
+            return 1
+        else:
+            return 0
 
+    def findCycleStart(self, coord_dict):
+        # compute velocities
+        current_step = 0
+        planet_dict = coord_dict.copy()
+        while True:
+            for i in range(len(planet_dict)):
+                for other_coord in planet_dict:
+                    # skip over coordinates that are the same
+                    if other_coord is planet_dict[i]:
+                        continue
+
+                    # generate velocity for the the coordinate to update
+                    velocity = planet_dict[i][1]
+                    delta = self._compute_velocity_val(planet_dict[i][0], other_coord[0])
+                    new_velocity = velocity + delta
+                    planet_dict[i] = (planet_dict[i][0], new_velocity)
+
+            # update the coordinates with the generated velocity
+            new_planet_coord = []
+            for coord, velocity in planet_dict:
+                new_coord = coord + velocity
+                new_planet_coord.append((new_coord, velocity))
+
+            planet_dict = new_planet_coord
+            print(planet_dict)
+
+            if planet_dict[0][0] == coord_dict[0][0] and planet_dict[0][1] == coord_dict[0][1] \
+                and planet_dict[1][0] == coord_dict[1][0] and planet_dict[1][1] == coord_dict[1][1] \
+                and planet_dict[2][0] == coord_dict[2][0] and planet_dict[2][1] == coord_dict[2][1] \
+                and planet_dict[3][0] == coord_dict[3][0] and planet_dict[3][1] == coord_dict[3][1]:
+                return current_step
+            else:
+                current_step += 1
 
 
 if __name__ == '__main__':
@@ -123,9 +161,17 @@ if __name__ == '__main__':
 
     print("Part 2")
 
+    # sol = NBodyProblem('test_input_1.txt')
+    # sol.stepsToInitialState()
+    # sol.runSimulation(2772)
+    # sol.printState(sol.planet_dict)
+
     sol = NBodyProblem('test_input_1.txt')
-    sol.stepsToInitialState()
-    sol.runSimulation(2772)
-    sol.printState(sol.planet_dict)
+    result = sol.findCycleStart([(-1, 0), (2, 0), (4, 0), (3, 0)])
+    print(result)
+    result = sol.findCycleStart([(0, 0), (-10, 0), (-8, 0), (5, 0)])
+    print(result)
+    result = sol.findCycleStart([(2, 0), (-7, 0), (8, 0), (-1, 0)])
+    print(result)
 
 
