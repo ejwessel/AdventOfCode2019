@@ -1,3 +1,4 @@
+import numpy
 class NBodyProblem:
 
     def __init__(self, file_input):
@@ -87,6 +88,23 @@ class NBodyProblem:
         else:
             return 0
 
+    def extractCoordinates(self):
+        x_coordinates = []
+        y_coordinates = []
+        z_coordinates = []
+        for coord in self.planet_dict.keys():
+            x_coordinates.append((coord[0], 0))
+            y_coordinates.append((coord[1], 0))
+            z_coordinates.append((coord[2], 0))
+        return x_coordinates, y_coordinates, z_coordinates
+
+    def computeTotalSteps(self):
+        x_coords, y_coords, z_coords = self.extractCoordinates()
+        x_result = self.findCycleStart(x_coords)
+        y_result = self.findCycleStart(y_coords)
+        z_result = self.findCycleStart(z_coords)
+        return numpy.lcm(numpy.lcm(x_result, y_result), z_result)
+
     def findCycleStart(self, coord_dict):
         # compute velocities
         current_step = 0
@@ -111,15 +129,13 @@ class NBodyProblem:
                 new_planet_coord.append((new_coord, velocity))
 
             planet_dict = new_planet_coord
-            print(planet_dict)
+            current_step += 1
 
             if planet_dict[0][0] == coord_dict[0][0] and planet_dict[0][1] == coord_dict[0][1] \
-                and planet_dict[1][0] == coord_dict[1][0] and planet_dict[1][1] == coord_dict[1][1] \
+                    and planet_dict[1][0] == coord_dict[1][0] and planet_dict[1][1] == coord_dict[1][1] \
                 and planet_dict[2][0] == coord_dict[2][0] and planet_dict[2][1] == coord_dict[2][1] \
                 and planet_dict[3][0] == coord_dict[3][0] and planet_dict[3][1] == coord_dict[3][1]:
                 return current_step
-            else:
-                current_step += 1
 
 
 if __name__ == '__main__':
@@ -161,17 +177,18 @@ if __name__ == '__main__':
 
     print("Part 2")
 
-    # sol = NBodyProblem('test_input_1.txt')
-    # sol.stepsToInitialState()
-    # sol.runSimulation(2772)
-    # sol.printState(sol.planet_dict)
-
     sol = NBodyProblem('test_input_1.txt')
-    result = sol.findCycleStart([(-1, 0), (2, 0), (4, 0), (3, 0)])
+    result = sol.computeTotalSteps()
+    assert result == 2772
+
+    sol = NBodyProblem('test_input_2.txt')
+    result = sol.computeTotalSteps()
+    assert result == 4686774924
+
+    sol = NBodyProblem('input.txt')
+    result = sol.computeTotalSteps()
+    assert result == 360689156787864
     print(result)
-    result = sol.findCycleStart([(0, 0), (-10, 0), (-8, 0), (5, 0)])
-    print(result)
-    result = sol.findCycleStart([(2, 0), (-7, 0), (8, 0), (-1, 0)])
-    print(result)
+
 
 
